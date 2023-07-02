@@ -10,46 +10,61 @@ import CoreData
 
 struct DailyDoView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    @EnvironmentObject var dateHolder: DateHolder
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \DoItem.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<DoItem>
-
+    
     var body: some View {
+        
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+            
+            VStack {
+            
+                ZStack {
+                
+                    List {
+                    
+                        ForEach(items) { item in
+                            NavigationLink(destination: DoEditView(passedDoItem: item, initialDate: Date())
+                                .environmentObject(dateHolder))
+                            {
+                                Text(item.timestamp!, formatter: itemFormatter)
+                            }
+                        }
+                        .onDelete(perform: deleteItems)
                     }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            EditButton()
+                        }
+                    }
+                    
+                    FloatingButton().environmentObject(dateHolder)
                 }
-                .onDelete(perform: deleteItems)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-            }
-            Text("Select an item")
+            .navigationTitle("DailyDo")
+            
         }
     }
-
-
+    
+    
+    func saveContext(_ context: NSManagedObjectContext) {
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            
+            dateHolder.saveContext(viewContext)
         }
     }
 }

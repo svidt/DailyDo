@@ -13,8 +13,13 @@ struct DailyDoApp: App {
 
     var body: some Scene {
         WindowGroup {
+            
+            let context = persistenceController.container.viewContext
+            let dateHolder = DateHolder(context)
+            
             DailyDoView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(dateHolder)
         }
     }
 }

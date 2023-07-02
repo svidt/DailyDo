@@ -3,9 +3,10 @@
     <entity name="DoItem" representedClassName="DoItem" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="note" optional="YES" attributeType="String"/>
-        <attribute name="repeating" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="timeSchedule" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
 </model>

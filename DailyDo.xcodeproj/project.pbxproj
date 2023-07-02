@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6815DB692A5203DE00473502 /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6815DB682A5203DE00473502 /* FloatingButton.swift */; };
 		6815DB6B2A52041400473502 /* DoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6815DB6A2A52041400473502 /* DoEditView.swift */; };
+		6815DB6E2A52318C00473502 /* DateHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6815DB6D2A52318C00473502 /* DateHolder.swift */; };
 		682CB22A2A51F12C0060B4C2 /* DailyDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682CB2292A51F12C0060B4C2 /* DailyDoApp.swift */; };
 		682CB22C2A51F12C0060B4C2 /* DailyDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682CB22B2A51F12C0060B4C2 /* DailyDoView.swift */; };
 		682CB22E2A51F12D0060B4C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 682CB22D2A51F12D0060B4C2 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		6815DB682A5203DE00473502 /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		6815DB6A2A52041400473502 /* DoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoEditView.swift; sourceTree = "<group>"; };
+		6815DB6D2A52318C00473502 /* DateHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHolder.swift; sourceTree = "<group>"; };
 		682CB2262A51F12C0060B4C2 /* DailyDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		682CB2292A51F12C0060B4C2 /* DailyDoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoApp.swift; sourceTree = "<group>"; };
 		682CB22B2A51F12C0060B4C2 /* DailyDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				682CB2292A51F12C0060B4C2 /* DailyDoApp.swift */,
+				6815DB6D2A52318C00473502 /* DateHolder.swift */,
 				6815DB6C2A52041B00473502 /* Views */,
 				682CB22D2A51F12D0060B4C2 /* Assets.xcassets */,
 				682CB2322A51F12D0060B4C2 /* Persistence.swift */,
@@ -157,6 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6815DB6E2A52318C00473502 /* DateHolder.swift in Sources */,
 				682CB2332A51F12D0060B4C2 /* Persistence.swift in Sources */,
 				6815DB6B2A52041400473502 /* DoEditView.swift in Sources */,
 				682CB22C2A51F12C0060B4C2 /* DailyDoView.swift in Sources */,
