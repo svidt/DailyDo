@@ -2,7 +2,7 @@
 //  Persistence.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 02/07/2023.
+//  Created by Svidt on 02/07/2023.
 //
 
 import CoreData
@@ -14,7 +14,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
+            let newItem = DoItem(context: viewContext)
             newItem.timestamp = Date()
         }
         do {
