@@ -13,7 +13,7 @@ struct DailyDoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DailyDoView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
