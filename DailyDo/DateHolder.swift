@@ -2,7 +2,7 @@
 //  DateHolder.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 02/07/2023.
+//  Created by Svidt on 02/07/2023.
 //
 
 import SwiftUI
