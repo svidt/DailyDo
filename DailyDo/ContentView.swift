@@ -25,13 +25,7 @@ struct ContentView: View {
                     Button(action: {
                         // Code
                     }, label: {
-                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-                            .padding(30)
-                            .foregroundColor(.white)
-                            .background(.blue)
-                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                            .padding(.vertical, 20)
-                        
+                        AddButton()
                     })
 
                 }
