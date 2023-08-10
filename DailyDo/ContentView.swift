@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 30/07/2023.
+//  Created by Svidt on 30/07/2023.
 //
 
 import SwiftUI
@@ -12,32 +12,41 @@ struct ContentView: View {
     
     @Environment(\.modelContext) private var context
     
-    @Query private var items: [DailyDoItem]
+    @Query private var items: [DoItem]
     
     var body: some View {
-        VStack {
+        ZStack {
+            Color.gray
+        
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        // Code
+                    }, label: {
+                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                            .padding(30)
+                            .foregroundColor(.white)
+                            .background(.blue)
+                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                            .padding(.vertical, 20)
+                        
+                    })
 
-            Text("Tap on this button")
-            Button("Add DailyDo") {
-                addDailyDo()
-            }
-            
-            List {
-                ForEach(items) { item in
-                    Text(item.name)
                 }
             }
             
-        }
-        .padding()
-    }
-    
-    func addDailyDo() {
-        // Create the item
-        let item = DailyDoItem(name: "Text Item")
+            List(items, id: \.self) { item in
+                Text("Hello \(item.name)")
+            }
+
+            
+        }.ignoresSafeArea()
         
-        // Add the item to the data context
-        context.insert(item)
+//        func addDo() {
+//            context.insert(DoItem)
+//        }
         
     }
     

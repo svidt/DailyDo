@@ -11,7 +11,7 @@
 		6876705E2A7674AA0074385B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6876705D2A7674AA0074385B /* ContentView.swift */; };
 		687670602A7674AE0074385B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6876705F2A7674AE0074385B /* Assets.xcassets */; };
 		687670632A7674AE0074385B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 687670622A7674AE0074385B /* Preview Assets.xcassets */; };
-		68A510962A7675790066E219 /* DailyDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A510952A7675790066E219 /* DailyDoItem.swift */; };
+		68A510962A7675790066E219 /* DoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A510952A7675790066E219 /* DoItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,7 +20,7 @@
 		6876705D2A7674AA0074385B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6876705F2A7674AE0074385B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		687670622A7674AE0074385B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		68A510952A7675790066E219 /* DailyDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoItem.swift; sourceTree = "<group>"; };
+		68A510952A7675790066E219 /* DoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +55,7 @@
 			children = (
 				6876705B2A7674AA0074385B /* DailyDoApp.swift */,
 				6876705D2A7674AA0074385B /* ContentView.swift */,
-				68A510952A7675790066E219 /* DailyDoItem.swift */,
+				68A510952A7675790066E219 /* DoItem.swift */,
 				6876705F2A7674AE0074385B /* Assets.xcassets */,
 				687670612A7674AE0074385B /* Preview Content */,
 			);
@@ -142,7 +142,7 @@
 			files = (
 				6876705E2A7674AA0074385B /* ContentView.swift in Sources */,
 				6876705C2A7674AA0074385B /* DailyDoApp.swift in Sources */,
-				68A510962A7675790066E219 /* DailyDoItem.swift in Sources */,
+				68A510962A7675790066E219 /* DoItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,7 +2,7 @@
 //  DailyDoApp.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 30/07/2023.
+//  Created by Svidt on 30/07/2023.
 //
 
 import SwiftUI
@@ -14,6 +14,6 @@ struct DailyDoApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: DailyDoItem.self)
+        .modelContainer(for: DoItem.self)
     }
 }
