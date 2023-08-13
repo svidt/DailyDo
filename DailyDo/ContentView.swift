@@ -6,46 +6,26 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
     
-    @Environment(\.modelContext) private var context
-    
-    @Query private var items: [DoItem]
-    
     var body: some View {
-        ZStack {
-            Color.gray
-        
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        // Code
-                    }, label: {
-                        AddButton()
-                    })
 
-                }
-            }
+        NavigationView {
             
-            List(items, id: \.self) { item in
-                Text("Hello \(item.name)")
+            List {
+                Text("Test data")
             }
-
-            
-        }.ignoresSafeArea()
-        
-//        func addDo() {
-//            context.insert(DoItem)
-//        }
-        
+            .navigationTitle("DailyDo's")
+            .navigationBarItems(leading: EditButton(), trailing: Button("Add") {
+                // Code Add
+            })
+        }
     }
-    
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

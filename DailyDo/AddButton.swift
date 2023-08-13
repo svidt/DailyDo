@@ -17,7 +17,3 @@ struct AddButton: View {
             .padding(.vertical, 20)
     }
 }
-
-#Preview {
-    AddButton()
-}
