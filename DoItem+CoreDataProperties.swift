@@ -18,7 +18,6 @@ extension DoItem {
 
     @NSManaged public var name: String?
     @NSManaged public var note: String?
-    @NSManaged public var date: Date?
     @NSManaged public var category: String?
 
 }

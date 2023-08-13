@@ -24,14 +24,29 @@ struct DoSheet: View {
                     TextField("Enter description", text: $note)
                         .disableAutocorrection(true)
                     Picker("Select category", selection: $category) {
-                        ForEach(categories, id: \.self) { cate in
-                            Text(cate)
+                        ForEach(categories, id: \.self) { catego in
+                            Text(catego)
                         }
                     }
                     
                 }
             }
+            .navigationBarTitle(Text("Add DailyDo"))
+            .toolbar {
+                Button("Add") {
+                    let doItem = DoItem(context: self.moc)
+                    doItem.name = self.name
+                    doItem.note = self.note
+                    doItem.category = self.category
+                    do {
+                        try self.moc.save()
+                    } catch {
+                        print("Something went wrong \(error.localizedDescription)")
+                    }
+                }
+            }
         }
+
     }
 }
 
