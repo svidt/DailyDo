@@ -11,7 +11,8 @@ struct DoSheet: View {
     @Environment(\.managedObjectContext) var moc
     @State private var name = ""
     @State private var note = ""
-    @State private var category = ""
+    @State private var category = "Personal"
+    @State private var addPhoto = false
     
     private let categories = ["Personal", "Business"]
     
@@ -24,11 +25,16 @@ struct DoSheet: View {
                     TextField("Enter description", text: $note)
                         .disableAutocorrection(true)
                     Picker("Select category", selection: $category) {
-                        ForEach(categories, id: \.self) { catego in
-                            Text(catego)
+                        ForEach(categories, id: \.self) { cate in
+                            Text(cate)
                         }
                     }
                     
+                }
+                Section {
+                    Toggle(isOn: $addPhoto) {
+                        Text("Add Photo")
+                    }
                 }
             }
             .navigationBarTitle(Text("Add DailyDo"))
@@ -41,7 +47,7 @@ struct DoSheet: View {
                     do {
                         try self.moc.save()
                     } catch {
-                        print("Something went wrong \(error.localizedDescription)")
+     i                   print("Something went wrong \(error.localizedDescription)")
                     }
                 }
             }
