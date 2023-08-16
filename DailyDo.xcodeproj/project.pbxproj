@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		68861C7D2A8D711700708164 /* DailyDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68861C7C2A8D711700708164 /* DailyDoApp.swift */; };
 		68861C7F2A8D711700708164 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68861C7E2A8D711700708164 /* ContentView.swift */; };
-		68861C812A8D711700708164 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68861C802A8D711700708164 /* Item.swift */; };
+		68861C812A8D711700708164 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68861C802A8D711700708164 /* ToDo.swift */; };
 		68861C832A8D711B00708164 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68861C822A8D711B00708164 /* Assets.xcassets */; };
 		68861C862A8D711B00708164 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68861C852A8D711B00708164 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -18,7 +18,7 @@
 		68861C792A8D711700708164 /* DailyDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68861C7C2A8D711700708164 /* DailyDoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoApp.swift; sourceTree = "<group>"; };
 		68861C7E2A8D711700708164 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		68861C802A8D711700708164 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		68861C802A8D711700708164 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		68861C822A8D711B00708164 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		68861C852A8D711B00708164 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,7 +55,7 @@
 			children = (
 				68861C7C2A8D711700708164 /* DailyDoApp.swift */,
 				68861C7E2A8D711700708164 /* ContentView.swift */,
-				68861C802A8D711700708164 /* Item.swift */,
+				68861C802A8D711700708164 /* ToDo.swift */,
 				68861C822A8D711B00708164 /* Assets.xcassets */,
 				68861C842A8D711B00708164 /* Preview Content */,
 			);
@@ -141,7 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				68861C7F2A8D711700708164 /* ContentView.swift in Sources */,
-				68861C812A8D711700708164 /* Item.swift in Sources */,
+				68861C812A8D711700708164 /* ToDo.swift in Sources */,
 				68861C7D2A8D711700708164 /* DailyDoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,6 @@ struct DailyDoApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: Item.self)
+        .modelContainer(for: ToDo.self)
     }
 }
