@@ -24,12 +24,17 @@ struct DetailTodoView: View {
             HStack {
                 Text("Tags")
             
-                ForEach(todo.tags ?? []) { tag in
+                ForEach(todo.tags?.sorted(by: { $0.name < $1.name }) ?? []) { tag in
                     Text(tag.name)
                         .padding(5)
                         .overlay {
                             RoundedRectangle(cornerRadius: 5)
                                 .stroke(tag.color.toSwiftUIColor(), lineWidth: 2)
+                        }
+                        .onTapGesture {
+                            if let index = todo.tags?.firstIndex(where: { $0 == tag }) {
+                                todo.tags?.remove(at: index)
+                            }
                         }
                     
                 }
