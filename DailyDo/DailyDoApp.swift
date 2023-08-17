@@ -2,7 +2,7 @@
 //  DailyDoApp.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 16/08/2023.
+//  Created by Svidt on 16/08/2023.
 //
 
 import SwiftUI

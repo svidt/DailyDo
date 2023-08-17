@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68448F212A8EA45F001DA8F7 /* RGBColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68448F202A8EA45F001DA8F7 /* RGBColor.swift */; };
+		68448F232A8EA481001DA8F7 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68448F222A8EA481001DA8F7 /* Tag.swift */; };
+		68448F252A8EA7BB001DA8F7 /* DetailTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68448F242A8EA7BB001DA8F7 /* DetailTodoView.swift */; };
+		68448F272A8EAADE001DA8F7 /* TodoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68448F262A8EAADE001DA8F7 /* TodoRow.swift */; };
 		68861C7D2A8D711700708164 /* DailyDoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68861C7C2A8D711700708164 /* DailyDoApp.swift */; };
 		68861C7F2A8D711700708164 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68861C7E2A8D711700708164 /* ContentView.swift */; };
 		68861C812A8D711700708164 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68861C802A8D711700708164 /* ToDo.swift */; };
@@ -15,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		68448F202A8EA45F001DA8F7 /* RGBColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBColor.swift; sourceTree = "<group>"; };
+		68448F222A8EA481001DA8F7 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		68448F242A8EA7BB001DA8F7 /* DetailTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTodoView.swift; sourceTree = "<group>"; };
+		68448F262A8EAADE001DA8F7 /* TodoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRow.swift; sourceTree = "<group>"; };
 		68861C792A8D711700708164 /* DailyDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68861C7C2A8D711700708164 /* DailyDoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoApp.swift; sourceTree = "<group>"; };
 		68861C7E2A8D711700708164 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,6 +42,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		68448F1F2A8EA436001DA8F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				68861C802A8D711700708164 /* ToDo.swift */,
+				68448F222A8EA481001DA8F7 /* Tag.swift */,
+				68448F202A8EA45F001DA8F7 /* RGBColor.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		68861C702A8D711600708164 = {
 			isa = PBXGroup;
 			children = (
@@ -55,7 +73,9 @@
 			children = (
 				68861C7C2A8D711700708164 /* DailyDoApp.swift */,
 				68861C7E2A8D711700708164 /* ContentView.swift */,
-				68861C802A8D711700708164 /* ToDo.swift */,
+				68448F262A8EAADE001DA8F7 /* TodoRow.swift */,
+				68448F242A8EA7BB001DA8F7 /* DetailTodoView.swift */,
+				68448F1F2A8EA436001DA8F7 /* Model */,
 				68861C822A8D711B00708164 /* Assets.xcassets */,
 				68861C842A8D711B00708164 /* Preview Content */,
 			);
@@ -141,8 +161,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				68861C7F2A8D711700708164 /* ContentView.swift in Sources */,
+				68448F272A8EAADE001DA8F7 /* TodoRow.swift in Sources */,
 				68861C812A8D711700708164 /* ToDo.swift in Sources */,
+				68448F232A8EA481001DA8F7 /* Tag.swift in Sources */,
+				68448F252A8EA7BB001DA8F7 /* DetailTodoView.swift in Sources */,
 				68861C7D2A8D711700708164 /* DailyDoApp.swift in Sources */,
+				68448F212A8EA45F001DA8F7 /* RGBColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
