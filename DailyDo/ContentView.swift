@@ -12,19 +12,23 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    //    @Query(sort: \ToDo.creationDate, order: .reverse) private var todos: [ToDo]
     
+    // Order ToDo's in reverse date order - Newest one on top, oldest at the bottom.
     @Query(sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var todos: [ToDo]
     
-    // Sort after creation date and filter for completed/incomplete ToDos
+    // Sort after creation date and filter for completed ToDos
     @Query(filter: #Predicate<ToDo>{ $0.isDone }, sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var completedTodos: [ToDo]
     
+    // Sort after creation date and filter for incomplete ToDos
     @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
+    
+    @State private var showingToDoSheet = false
+    @State private var newName = "Newly added"
     
     var body: some View {
         NavigationSplitView {
             List {
-                Section("DailyDos") {
+                Section("💪 Coming up") {
                     ForEach(incompleteTodos) { todo in
                         NavigationLink {
                             DetailTodoView(todo: todo)
@@ -34,9 +38,10 @@ struct ContentView: View {
                     }
                     .onDelete(perform: deleteItems)
                     
+                    
                 }
                 
-                Section("All Done 👍") {
+                Section("👍 All Done") {
                     ForEach(completedTodos) { todo in
                         NavigationLink {
                             DetailTodoView(todo: todo)
@@ -44,26 +49,38 @@ struct ContentView: View {
                             TodoRow(todo: todo)
                         }
                     }
+                    .onDelete(perform: deleteItems)
                 }
+            }
+            .navigationTitle("DailyDo")
+            .sheet(isPresented: $showingToDoSheet) {
+                ToDoSheet()
             }
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                    Button {
+                        showingToDoSheet = true
+                        addItem()
+                    } label: {
+                        Image(systemName: "plus")
+                        Text("Add")
                     }
+                    .padding(5)
+                    .background(.yellow)
+                    .foregroundColor(.black)
+                    .clipShape(Capsule())
                 }
+                
             }
+            
         } detail: {
             Text("Select an item")
         }
     }
     
     private func addItem() {
-        let newItem = ToDo(name: "new name")
+        let newItem = ToDo(name: newName)
         modelContext.insert(newItem)
     }
     
@@ -72,6 +89,7 @@ struct ContentView: View {
             modelContext.delete(todos[index])
         }
     }
+    
 }
 
 #Preview {

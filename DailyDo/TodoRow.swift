@@ -12,13 +12,28 @@ struct TodoRow: View {
     let todo: ToDo
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
+        HStack {
+            VStack {
+                    Button {
+                        todo.isDone.toggle()
+                        print("Tapped")
+                    } label: {
+                        Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(todo.isDone ? .green : .gray)
+                            .imageScale(.large)
+                    }
+                }
+            Spacer()
+            
+            VStack(alignment: .trailing) {
                 Text(todo.name)
-                Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(todo.isDone ? .green : .gray)
+                    .font(.title3)
+                    .bold()
+                Text(todo.creationDate, format: Date.FormatStyle(date: .numeric))
+                    .font(.subheadline)
+                    
             }
-            Text(todo.creationDate, format: Date.FormatStyle(date: .numeric, time: .standard))
+
         }
     }
 }

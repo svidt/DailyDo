@@ -55,8 +55,8 @@ struct DetailTodoView: View {
     }
 }
 
-/*
-#Preview {
-    DetailTodoView()
-}
-*/
+
+//#Preview {
+//    DetailTodoView()
+//}
+
