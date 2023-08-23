@@ -13,17 +13,29 @@ struct DetailTodoView: View {
     
     var body: some View {
         VStack {
+            Section { 
+                TextField("Change Name", text: $todo.name)
+                    .textFieldStyle(.roundedBorder)
+                Toggle(todo.isDone ? "Completed" : "Incomplete", isOn: $todo.isDone)
+                
+                
+            } header: {
+                Text(todo.name)
+                    .font(.title)
+            }
+        footer: {
+            HStack {
+                Text("Added: \(todo.creationDate.formatted(date: .numeric, time: .omitted))")
+            }
+            HStack {
+                Text("Completed: ")
+                Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(todo.isDone ? .green : .gray)
+            }
+            Text("Remind me at:")
+        }
             
-            Text(todo.name)
-                .font(.largeTitle)
-            TextField("New ToDo", text: $todo.name)
-                .textFieldStyle(.roundedBorder)
             
-            Toggle(todo.isDone ? "Done" : "Open", isOn: $todo.isDone)
-            
-            
-            Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
-                .foregroundColor(todo.isDone ? .green : .gray)
         }
         .padding(5)
     }

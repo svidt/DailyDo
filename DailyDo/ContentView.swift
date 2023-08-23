@@ -9,6 +9,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
@@ -23,7 +24,7 @@ struct ContentView: View {
     @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
     
     @State private var showingToDoSheet = false
-    @State private var newName = "Newly added"
+    @State private var newName = "DaillyDo"
     
     var body: some View {
         NavigationSplitView {
@@ -37,35 +38,12 @@ struct ContentView: View {
                         }
                         .swipeActions(edge: .leading) {
                             Button {
-                                print("Snoozed..")
-                            } label: {
-                                Label("Snooze", systemImage: "zzz")
-                            }
-                            .tint(.blue)
-                        }
-                        .swipeActions(edge: .trailing) {
-                            Button {
                                 todo.isDone.toggle()
                                 print("Completed!")
                             } label: {
                                 Label("Completed", systemImage: "checkmark.circle")
                             }
                             .tint(.green)
-                        }
-                        
-                        .contextMenu {
-                            /*@START_MENU_TOKEN@*/Text("Menu Item 1")/*@END_MENU_TOKEN@*/
-                            Button {
-                                
-                            } label: {
-                                Text("Completed")
-                            }
-                            
-                            Button(role: .destructive) {
-                                deleteItems(offsets: IndexSet())
-                            } label: {
-                                Text("Delete")
-                            }
                         }
                     }
                     .onDelete(perform: deleteItems)
@@ -86,7 +64,7 @@ struct ContentView: View {
             .navigationTitle("DailyDo")
             .sheet(isPresented: $showingToDoSheet) {
                 ToDoSheet()
-                    .presentationDetents(.large)
+                    .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             }
             
