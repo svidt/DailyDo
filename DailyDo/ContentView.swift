@@ -4,8 +4,11 @@
 //
 //  Created by Svidt on 16/08/2023.
 //
-//  Guided by Karin Prater
+//  Mainstructure, guided by Karin Prater
 //  https://www.youtube.com/watch?v=CcUgRDLcUmQ
+//
+// SwipeActions: https://www.hackingwithswift.com/books/ios-swiftui/adding-custom-row-swipe-actions-to-a-list
+// Notifications: https://www.hackingwithswift.com/books/ios-swiftui/scheduling-local-notifications
 
 import SwiftUI
 import SwiftData
