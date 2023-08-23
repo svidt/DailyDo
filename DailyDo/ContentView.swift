@@ -35,9 +35,39 @@ struct ContentView: View {
                         } label: {
                             TodoRow(todo: todo)
                         }
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                print("Pinned!")
+                            } label: {
+                                Label("Pin", systemImage: "pin")
+                            }
+                            .tint(.orange)
+                        }
+                        .swipeActions(edge: .trailing) {
+                            Button {
+                                print("Snoozed..")
+                            } label: {
+                                Label("Snooze", systemName: "zzz")
+                            }
+                            .tint(.blue)
+                        }
+                        
+                        .contextMenu {
+                            /*@START_MENU_TOKEN@*/Text("Menu Item 1")/*@END_MENU_TOKEN@*/
+                            Button {
+                                
+                            } label: {
+                                Text("Completed")
+                            }
+                            
+                            Button(role: .destructive) {
+                                deleteItems(offsets: IndexSet())
+                            } label: {
+                                Text("Delete")
+                            }
+                        }
                     }
                     .onDelete(perform: deleteItems)
-                    
                     
                 }
                 

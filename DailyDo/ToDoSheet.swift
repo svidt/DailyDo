@@ -14,32 +14,19 @@ struct ToDoSheet: View {
     
     //    @Bindable var todo: ToDo
     
-    @State private var newName: String = "Add new name"
+    @State private var newName: String = ""
+    @State private var newPriority: String = ""
     
     var body: some View {
         VStack(alignment: .leading) {
             Section() {
-                Text("Name")
-                    .font(.title)
-                TextField("Add Name here", text: $newName)
+                Text(newName == "" ? "DailyDo" : "\(newName)")
+                    .font(.largeTitle)
+                TextField("Add name", text: $newName)
+                    .autocorrectionDisabled()
+                TextField("Add priority", text: $newPriority)
             }
-            .padding()
-            
-            
-            HStack(alignment: .center) {
-                Spacer()
-                
-                Button("Add Do") {
-                    // Code
-                    
-                }
-                .padding(5)
-                .background(.yellow)
-                .foregroundColor(.black)
-                .clipShape(Capsule())
-                
-                Spacer()
-            }
+            Spacer()
         }
         .padding()
     }
