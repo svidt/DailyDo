@@ -37,19 +37,20 @@ struct ContentView: View {
                         }
                         .swipeActions(edge: .leading) {
                             Button {
-                                print("Pinned!")
+                                print("Snoozed..")
                             } label: {
-                                Label("Pin", systemImage: "pin")
+                                Label("Snooze", systemImage: "zzz")
                             }
-                            .tint(.orange)
+                            .tint(.blue)
                         }
                         .swipeActions(edge: .trailing) {
                             Button {
-                                print("Snoozed..")
+                                todo.isDone.toggle()
+                                print("Completed!")
                             } label: {
-                                Label("Snooze", systemName: "zzz")
+                                Label("Completed", systemImage: "checkmark.circle")
                             }
-                            .tint(.blue)
+                            .tint(.green)
                         }
                         
                         .contextMenu {
@@ -85,7 +86,10 @@ struct ContentView: View {
             .navigationTitle("DailyDo")
             .sheet(isPresented: $showingToDoSheet) {
                 ToDoSheet()
+                    .presentationDetents(.large)
+                    .presentationDragIndicator(.visible)
             }
+            
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

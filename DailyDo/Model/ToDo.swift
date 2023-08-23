@@ -19,8 +19,6 @@ final class ToDo {
     @Attribute(.externalStorage)
     var image: Data?
     
-    var tags: [Tag]?
-    
     init(name: String, isDone: Bool = false, priority: Int = 0) {
         self.creationDate = Date()
         self.name = name

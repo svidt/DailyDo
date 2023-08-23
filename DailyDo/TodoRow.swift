@@ -14,18 +14,6 @@ struct TodoRow: View {
     var body: some View {
         HStack {
             VStack {
-                    Button {
-                        todo.isDone.toggle()
-                        print("Tapped")
-                    } label: {
-                        Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
-                            .foregroundColor(todo.isDone ? .green : .gray)
-                            .imageScale(.large)
-                    }
-                }
-            Spacer()
-            
-            VStack(alignment: .trailing) {
                 Text(todo.name)
                     .font(.title3)
                     .bold()
