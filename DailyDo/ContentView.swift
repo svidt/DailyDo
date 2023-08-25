@@ -67,7 +67,7 @@ struct ContentView: View {
             .navigationTitle("DailyDo")
             .sheet(isPresented: $showingToDoSheet) {
                 ToDoSheet()
-                    .presentationDetents([.medium])
+                    .presentationDetents([.fraction(1.0), .fraction(0.6)])
                     .presentationDragIndicator(.visible)
             }
             
@@ -82,12 +82,14 @@ struct ContentView: View {
                         Text("Add")
                     }
                     .padding(5)
-                    .background(.yellow)
-                    .foregroundColor(.black)
+                    .bold()
+                    .background(.purple)
+                    .foregroundColor(.white)
                     .clipShape(Capsule())
                 }
                 
             }
+        
             
         } detail: {
             Text("Select an item")

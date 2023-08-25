@@ -43,6 +43,6 @@ struct DetailTodoView: View {
 
 
 //#Preview {
-//    DetailTodoView()
+//    DetailTodoView(todo: ToDo(name: "Preview name"))
 //}
 

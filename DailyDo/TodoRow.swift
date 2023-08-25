@@ -13,7 +13,7 @@ struct TodoRow: View {
     
     var body: some View {
         HStack {
-            VStack {
+            VStack(alignment: .leading) {
                 Text(todo.name)
                     .font(.title3)
                     .bold()
