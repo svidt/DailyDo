@@ -30,70 +30,72 @@ struct ContentView: View {
     @State private var newName = "DaillyDo"
     
     var body: some View {
-        NavigationSplitView {
-            List {
-                Section("💪 Coming up") {
-                    ForEach(incompleteTodos) { todo in
-                        NavigationLink {
-                            DetailTodoView(todo: todo)
-                        } label: {
-                            TodoRow(todo: todo)
-                        }
-                        .swipeActions(edge: .leading) {
-                            Button {
-                                todo.isDone.toggle()
-                                print("Completed!")
+        ZStack {
+            NavigationSplitView {
+                List {
+                    Section("Coming up 💪") {
+                        ForEach(incompleteTodos) { todo in
+                            NavigationLink {
+                                DetailTodoView(todo: todo)
                             } label: {
-                                Label("Completed", systemImage: "checkmark.circle")
+                                TodoRow(todo: todo)
                             }
-                            .tint(.green)
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    todo.isDone.toggle()
+                                    print("\(todo.name) completed at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                } label: {
+                                    Label("Completed", systemImage: "checkmark.circle")
+                                }
+                                .tint(.green)
+                            }
                         }
+                        .onDelete(perform: deleteItems)
+                        
                     }
-                    .onDelete(perform: deleteItems)
                     
-                }
-                
-                Section("👍 All Done") {
-                    ForEach(completedTodos) { todo in
-                        NavigationLink {
-                            DetailTodoView(todo: todo)
-                        } label: {
-                            TodoRow(todo: todo)
+                    Section("All Done 👍") {
+                        ForEach(completedTodos) { todo in
+                            NavigationLink {
+                                DetailTodoView(todo: todo)
+                            } label: {
+                                TodoRow(todo: todo)
+                            }
                         }
+                        .onDelete(perform: deleteItems)
                     }
-                    .onDelete(perform: deleteItems)
                 }
-            }
-            .navigationTitle("DailyDo")
-            .sheet(isPresented: $showingToDoSheet) {
-                ToDoSheet()
-                    .presentationDetents([.fraction(1.0), .fraction(0.6)])
-                    .presentationDragIndicator(.visible)
+                .navigationTitle("DailyDo")
+                .sheet(isPresented: $showingToDoSheet) {
+                    ToDoSheet()
+                        .presentationDetents([.fraction(0.7)])
+                    //                    .presentationDragIndicator(.visible)
+                }
+            } detail: {
+                Text("Select an item")
             }
             
-            
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+            VStack {
+                HStack {
+                    Spacer()
                     Button {
                         showingToDoSheet = true
-                        addItem()
+                                                   addItem()
                     } label: {
                         Image(systemName: "plus")
-                        Text("Add")
+                            .bold()
+                            .padding(20)
+                            .background(.purple)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
                     }
-                    .padding(5)
-                    .bold()
-                    .background(.purple)
-                    .foregroundColor(.white)
-                    .clipShape(Capsule())
+                    .padding()
                 }
-                
+                Spacer()
             }
-        
             
-        } detail: {
-            Text("Select an item")
         }
+        
     }
     
     private func addItem() {

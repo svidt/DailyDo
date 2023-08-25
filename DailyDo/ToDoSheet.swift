@@ -12,7 +12,7 @@ struct ToDoSheet: View {
     
     @Environment(\.modelContext) private var modelContext
     
-//    @Bindable var todo: ToDo
+    //    @Bindable var todo: ToDo
     
     @State private var newName: String = ""
     @State private var dateCreated: Date = Date()
@@ -26,7 +26,7 @@ struct ToDoSheet: View {
                     newName == "" ? "DailyDo" : newName
                 }
                 Text(placeholderText)
-//                Text(newName == "" ? "" : "\(newName)")
+                //                Text(newName == "" ? "" : "\(newName)")
                     .font(.largeTitle).bold()
                     .foregroundStyle(.purple)
                 HStack {
@@ -54,14 +54,13 @@ struct ToDoSheet: View {
                 DatePicker("Pick at date please", selection: $targetDate, displayedComponents: [.date])
                     .datePickerStyle(.graphical)
                     .tint(.purple)
+            } footer: {
+                Text("\(dateCreated.formatted(date: .abbreviated, time: .omitted))")
+                    .font(.subheadline)
+                    .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
             }
-            //        footer: {
-            //            Text("\(dateCreated.formatted(date: .abbreviated, time: .omitted))")
-            //                .font(.subheadline)
-            //                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-            //        }
             
-//            Spacer()
+            Spacer()
         }
         .padding(.vertical, 20)
         .padding(.horizontal, 20)
