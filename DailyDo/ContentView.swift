@@ -9,6 +9,7 @@
 //
 // SwipeActions: https://www.hackingwithswift.com/books/ios-swiftui/adding-custom-row-swipe-actions-to-a-list
 // Notifications: https://www.hackingwithswift.com/books/ios-swiftui/scheduling-local-notifications
+// Adding QR Code: https://www.hackingwithswift.com/books/ios-swiftui/generating-and-scaling-up-a-qr-code
 
 import SwiftUI
 import SwiftData
@@ -27,7 +28,7 @@ struct ContentView: View {
     @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
     
     @State private var showingToDoSheet = false
-    @State private var newName = "DaillyDo"
+//    @State private var newName = "DaillyDo"
     
     var body: some View {
         ZStack {
@@ -67,7 +68,7 @@ struct ContentView: View {
                 }
                 .navigationTitle("DailyDo")
                 .sheet(isPresented: $showingToDoSheet) {
-                    ToDoSheet()
+                    ToDoSheet(todo: ToDo(name: "Hello"))
                         .presentationDetents([.fraction(0.7)])
                     //                    .presentationDragIndicator(.visible)
                 }
@@ -80,7 +81,7 @@ struct ContentView: View {
                     Spacer()
                     Button {
                         showingToDoSheet = true
-                                                   addItem()
+//                                                   addItem()
                     } label: {
                         Image(systemName: "plus")
                             .bold()
@@ -98,10 +99,10 @@ struct ContentView: View {
         
     }
     
-    private func addItem() {
-        let newItem = ToDo(name: newName)
-        modelContext.insert(newItem)
-    }
+//    private func addItem() {
+//        let newItem = ToDo(name: newName)
+//        modelContext.insert(newItem)
+//    }
     
     private func deleteItems(offsets: IndexSet) {
         for index in offsets {

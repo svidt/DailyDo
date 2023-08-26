@@ -12,7 +12,7 @@ struct ToDoSheet: View {
     
     @Environment(\.modelContext) private var modelContext
     
-    //    @Bindable var todo: ToDo
+        @Bindable var todo: ToDo
     
     @State private var newName: String = ""
     @State private var dateCreated: Date = Date()
@@ -26,7 +26,6 @@ struct ToDoSheet: View {
                     newName == "" ? "DailyDo" : newName
                 }
                 Text(placeholderText)
-                //                Text(newName == "" ? "" : "\(newName)")
                     .font(.largeTitle).bold()
                     .foregroundStyle(.purple)
                 HStack {
@@ -36,18 +35,15 @@ struct ToDoSheet: View {
                         .clipShape(RoundedRectangle(cornerRadius: 25.0))
                         .autocorrectionDisabled()
                     Button("+ Add") {
-                        // Code
+                        addItem()
+                        print("item added")
                     }
                     .bold()
                     .padding(10)
                     .background(.purple)
                     .foregroundColor(.white)
                     .clipShape(Capsule())
-                    
-                    
                 }
-                
-                
             }
             
             Section {
@@ -66,8 +62,12 @@ struct ToDoSheet: View {
         .padding(.horizontal, 20)
     }
     
+    private func addItem() {
+        let newItem = ToDo(name: newName)
+        modelContext.insert(newItem)
+    }
 }
 
-#Preview {
-    ToDoSheet()
-}
+//#Preview {
+//    ToDoSheet()
+//}
