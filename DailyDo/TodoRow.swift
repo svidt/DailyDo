@@ -17,10 +17,16 @@ struct TodoRow: View {
                 Text(todo.name)
                     .font(.title3)
                     .bold()
-                Text(todo.creationDate, format: Date.FormatStyle(date: .numeric))
+                Text(todo.targetDate, format: Date.FormatStyle(date: .numeric))
                     .font(.subheadline)
-                    
             }
+//            VStack {
+//                Text(todo.isDone == true ? "Completed" : "Incomplete")
+//                    .font(.title3)
+//                    .bold()
+//                Text(todo.creationDate, format: Date.FormatStyle(date: .numeric))
+//                    .font(.subheadline)
+//            }
 
         }
     }

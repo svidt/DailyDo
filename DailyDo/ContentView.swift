@@ -19,16 +19,15 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     
     // Order ToDo's in reverse date order - Newest one on top, oldest at the bottom.
-    @Query(sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var todos: [ToDo]
+    @Query(sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var todos: [ToDo]
     
     // Sort after creation date and filter for completed ToDos
-    @Query(filter: #Predicate<ToDo>{ $0.isDone }, sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var completedTodos: [ToDo]
+    @Query(filter: #Predicate<ToDo>{ $0.isDone }, sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var completedTodos: [ToDo]
     
     // Sort after creation date and filter for incomplete ToDos
-    @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.creationDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
+    @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
     
     @State private var showingToDoSheet = false
-//    @State private var newName = "DaillyDo"
     
     var body: some View {
         ZStack {
@@ -67,11 +66,12 @@ struct ContentView: View {
                     }
                 }
                 .navigationTitle("DailyDo")
-                .sheet(isPresented: $showingToDoSheet) {
-                    ToDoSheet(todo: ToDo(name: "Hello"))
-                        .presentationDetents([.fraction(0.7)])
-                    //                    .presentationDragIndicator(.visible)
+                .sheet(isPresented: $showingToDoSheet)
+                {
+                    ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
                 }
+                .presentationDetents([.fraction(0.6)])
+                
             } detail: {
                 Text("Select an item")
             }
@@ -81,7 +81,6 @@ struct ContentView: View {
                     Spacer()
                     Button {
                         showingToDoSheet = true
-//                                                   addItem()
                     } label: {
                         Image(systemName: "plus")
                             .bold()
@@ -98,11 +97,6 @@ struct ContentView: View {
         }
         
     }
-    
-//    private func addItem() {
-//        let newItem = ToDo(name: newName)
-//        modelContext.insert(newItem)
-//    }
     
     private func deleteItems(offsets: IndexSet) {
         for index in offsets {

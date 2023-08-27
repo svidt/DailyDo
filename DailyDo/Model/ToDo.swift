@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 final class ToDo {
+        
     @Attribute(.unique)
     var creationDate: Date
     var targetDate: Date
@@ -19,9 +20,9 @@ final class ToDo {
     @Attribute(.externalStorage)
     var image: Data?
     
-    init(name: String, isDone: Bool = false, priority: Int = 0) {
-        self.creationDate = Date()
-        self.targetDate = Date()
+    init(name: String, isDone: Bool = false, creationDate: Date, targetDate: Date) {
+        self.creationDate = creationDate
+        self.targetDate = targetDate
         self.name = name
         self.isDone = isDone
     }

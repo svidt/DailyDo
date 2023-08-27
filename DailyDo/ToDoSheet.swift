@@ -2,7 +2,7 @@
 //  ToDoSheet.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 21/08/2023.
+//  Created by Svidt on 21/08/2023.
 //
 
 import SwiftUI
@@ -12,15 +12,16 @@ struct ToDoSheet: View {
     
     @Environment(\.modelContext) private var modelContext
     
-        @Bindable var todo: ToDo
+    @Bindable var todo: ToDo
+    @Binding var isPresented: Bool
     
     @State private var newName: String = ""
-    @State private var dateCreated: Date = Date()
+    @State private var creationDate: Date = Date()
     @State private var targetDate: Date = Date()
     
     var body: some View {
+        
         VStack(alignment: .leading) {
-            
             Section() {
                 var placeholderText: String {
                     newName == "" ? "DailyDo" : newName
@@ -36,12 +37,14 @@ struct ToDoSheet: View {
                         .autocorrectionDisabled()
                     Button("+ Add") {
                         addItem()
-                        print("item added")
+                        print("\(todo.name) added")
                     }
+                    .disabled(newName == "" ? true : false)
                     .bold()
                     .padding(10)
                     .background(.purple)
                     .foregroundColor(.white)
+                    .opacity(newName == "" ? 0.5 : 1.0)
                     .clipShape(Capsule())
                 }
             }
@@ -50,10 +53,6 @@ struct ToDoSheet: View {
                 DatePicker("Pick at date please", selection: $targetDate, displayedComponents: [.date])
                     .datePickerStyle(.graphical)
                     .tint(.purple)
-            } footer: {
-                Text("\(dateCreated.formatted(date: .abbreviated, time: .omitted))")
-                    .font(.subheadline)
-                    .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
             }
             
             Spacer()
@@ -62,9 +61,10 @@ struct ToDoSheet: View {
         .padding(.horizontal, 20)
     }
     
-    private func addItem() {
-        let newItem = ToDo(name: newName)
+    func addItem() {
+        let newItem = ToDo(name: newName, isDone: false, creationDate: creationDate, targetDate: targetDate)
         modelContext.insert(newItem)
+        isPresented = false
     }
 }
 
