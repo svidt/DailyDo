@@ -28,6 +28,7 @@ struct ContentView: View {
     @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
     
     @State private var showingToDoSheet = false
+    @State private var hideButtonWhenNotOnPage = false
     
     var body: some View {
         ZStack {
@@ -37,8 +38,20 @@ struct ContentView: View {
                         ForEach(incompleteTodos) { todo in
                             NavigationLink {
                                 DetailTodoView(todo: todo)
+                                    .onAppear {
+                                        withAnimation {
+                                            hideButtonWhenNotOnPage = true
+                                        }
+                                    }
+                                    .onDisappear {
+                                        withAnimation {
+                                            hideButtonWhenNotOnPage = false
+                                        }
+                                    }
+                                
                             } label: {
                                 TodoRow(todo: todo)
+                                
                             }
                             .swipeActions(edge: .leading) {
                                 Button {
@@ -51,7 +64,6 @@ struct ContentView: View {
                             }
                         }
                         .onDelete(perform: deleteItems)
-                        
                     }
                     
                     Section("All Done 👍") {
@@ -65,12 +77,28 @@ struct ContentView: View {
                         .onDelete(perform: deleteItems)
                     }
                 }
+                    
+            
+//                .toolbar {
+//                    Button {
+//                        showingToDoSheet = true
+//                    } label: {
+//                        Image(systemName: "plus")
+//                            .bold()
+//                            .padding(20)
+//                            .background(.purple)
+//                            .foregroundColor(.white)
+//                            .clipShape(Circle())
+//
+//                    }
+//                    .padding()
+//                }
                 .navigationTitle("DailyDo")
                 .sheet(isPresented: $showingToDoSheet)
                 {
                     ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
+                        .presentationDetents([.fraction(0.7)])
                 }
-                .presentationDetents([.fraction(0.6)])
                 
             } detail: {
                 Text("Select an item")
@@ -88,6 +116,8 @@ struct ContentView: View {
                             .background(.purple)
                             .foregroundColor(.white)
                             .clipShape(Circle())
+                            .offset(CGSize(width: hideButtonWhenNotOnPage == false ? 0.0 : 100.0, height: 0))
+                        
                     }
                     .padding()
                 }
@@ -101,6 +131,7 @@ struct ContentView: View {
     private func deleteItems(offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(todos[index])
+            print("Item deleted")
         }
     }
     

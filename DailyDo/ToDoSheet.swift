@@ -55,7 +55,7 @@ struct ToDoSheet: View {
                     .tint(.purple)
             }
             
-            Spacer()
+//            Spacer()
         }
         .padding(.vertical, 20)
         .padding(.horizontal, 20)

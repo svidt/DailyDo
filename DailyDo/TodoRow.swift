@@ -2,7 +2,7 @@
 //  TodoRow.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 17/08/2023.
+//  Created by Svidt on 17/08/2023.
 //
 
 import SwiftUI
@@ -32,8 +32,7 @@ struct TodoRow: View {
     }
 }
 
-/*
-#Preview {
-    TodoRow()
-}
-*/
+
+//#Preview {
+//    TodoRow(todo: ToDo(name: "Title Name", creationDate: Date(), targetDate: Date()))
+//}
