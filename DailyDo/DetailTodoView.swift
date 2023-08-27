@@ -2,7 +2,7 @@
 //  DetailTodoView.swift
 //  DailyDo
 //
-//  Created by Kristian Emil Hansen Svidt on 17/08/2023.
+//  Created by Svidt on 17/08/2023.
 //
 
 import SwiftUI
@@ -10,12 +10,27 @@ import SwiftUI
 struct DetailTodoView: View {
     
     @Bindable var todo: ToDo
+    @State private var textToEdit = false
     
     var body: some View {
         VStack {
-            Section { 
-                TextField("Change Name", text: $todo.name)
-                    .textFieldStyle(.roundedBorder)
+            Section {
+                HStack {
+                    if textToEdit == false {
+                        Text("\(todo.name)")
+                    } else {
+                        TextField("Change Name", text: $todo.name)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                    Button {
+                        textToEdit.toggle()
+                    } label: {
+                        Image(systemName: textToEdit ? "checkmark.circle.fill" : "pencil.circle.fill")
+                            .foregroundColor(textToEdit ? .green : .purple)
+                    }
+                    .frame(width: 50, height: 50)
+                    
+                }
                 Toggle(todo.isDone ? "Completed" : "Incomplete", isOn: $todo.isDone)
                 
                 
@@ -27,6 +42,8 @@ struct DetailTodoView: View {
             HStack {
                 Text("Added: \(todo.creationDate.formatted(date: .numeric, time: .omitted))")
             }
+            .navigationBarTitleDisplayMode(.automatic)
+            .navigationTitle("HÝoo")
             HStack {
                 Text("Completed: ")
                 Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
@@ -42,7 +59,7 @@ struct DetailTodoView: View {
 }
 
 
-//#Preview {
-//    DetailTodoView(todo: ToDo(name: "Preview name"))
-//}
+#Preview {
+    DetailTodoView(todo: ToDo(name: "Title Name", isDone: false, creationDate: Date(), targetDate: Date()))
+}
 
