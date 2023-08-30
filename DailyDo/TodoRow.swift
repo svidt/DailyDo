@@ -11,6 +11,8 @@ struct TodoRow: View {
     
     let todo: ToDo
     
+//    let timeDifference = todo.targetDate.formatted(date: .numeric, time: .omitted)
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -20,16 +22,19 @@ struct TodoRow: View {
                 Text(todo.targetDate, format: Date.FormatStyle(date: .numeric))
                     .font(.subheadline)
             }
-//            VStack {
-//                Text(todo.isDone == true ? "Completed" : "Incomplete")
-//                    .font(.title3)
-//                    .bold()
-//                Text(todo.creationDate, format: Date.FormatStyle(date: .numeric))
-//                    .font(.subheadline)
-//            }
+            Spacer()
+            VStack {
+                Text("\(Date().distance(to: todo.targetDate).formatted())")
+                Text("\(todo.targetDate.distance(to: Date()))")
+
+            }
 
         }
     }
+    
+//    func daysTo(date: Date) -> Int? {
+//        let calender = Calender.current
+//    }
 }
 
 

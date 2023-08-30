@@ -10,6 +10,7 @@
 // SwipeActions: https://www.hackingwithswift.com/books/ios-swiftui/adding-custom-row-swipe-actions-to-a-list
 // Notifications: https://www.hackingwithswift.com/books/ios-swiftui/scheduling-local-notifications
 // Adding QR Code: https://www.hackingwithswift.com/books/ios-swiftui/generating-and-scaling-up-a-qr-code
+// Working with Dates: https://www.hackingwithswift.com/books/ios-swiftui/working-with-dates
 
 import SwiftUI
 import SwiftData
