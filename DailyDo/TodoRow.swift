@@ -17,13 +17,13 @@ struct TodoRow: View {
                 Text(todo.name)
                     .font(.title3)
                     .bold()
-                Text(String(todo.targetDate.distance(to: Date.now)))
+                Text(String(todo.targetDate.formatted(date: .numeric, time: .omitted)))
                     .font(.subheadline)
             }
             Spacer()
             VStack {
-                Text("\(Date().distance(to: todo.targetDate).formatted())")
-                Text("\(todo.targetDate.distance(to: Date()))")
+                Text("\(Date().formatted(date: .numeric, time: .omitted))")
+                Text("\(todo.targetDate.compare(Date())")
 
             }
 
