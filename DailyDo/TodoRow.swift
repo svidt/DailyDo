@@ -11,7 +11,14 @@ struct TodoRow: View {
     
     let todo: ToDo
     
+    
     var body: some View {
+        
+        let todayDate = Date()
+        let targetDate = self.todo.targetDate
+        
+        let compareDates = todayDate.compare(targetDate)
+        
         HStack {
             VStack(alignment: .leading) {
                 Text(todo.name)
@@ -23,7 +30,7 @@ struct TodoRow: View {
             Spacer()
             VStack {
                 Text("\(Date().formatted(date: .numeric, time: .omitted))")
-                Text("\(todo.targetDate.compare(Date())")
+//                Text(String(compareDates))
 
             }
 
