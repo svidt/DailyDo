@@ -33,7 +33,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            NavigationSplitView {
+            NavigationView {
                 List {
                     Section("Coming up 💪") {
                         ForEach(incompleteTodos) { todo in
@@ -78,22 +78,7 @@ struct ContentView: View {
                         .onDelete(perform: deleteItems)
                     }
                 }
-                    
-            
-//                .toolbar {
-//                    Button {
-//                        showingToDoSheet = true
-//                    } label: {
-//                        Image(systemName: "plus")
-//                            .bold()
-//                            .padding(20)
-//                            .background(.purple)
-//                            .foregroundColor(.white)
-//                            .clipShape(Circle())
-//
-//                    }
-//                    .padding()
-//                }
+                
                 .navigationTitle("DailyDo")
                 .sheet(isPresented: $showingToDoSheet)
                 {
@@ -101,8 +86,6 @@ struct ContentView: View {
                         .presentationDetents([.fraction(0.7)])
                 }
                 
-            } detail: {
-                Text("Select an item")
             }
             
             VStack {

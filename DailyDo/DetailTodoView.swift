@@ -13,53 +13,53 @@ struct DetailTodoView: View {
     @State private var textToEdit = false
     
     var body: some View {
+        
         VStack {
-            Section {
-                HStack {
-                    if textToEdit == false {
-                        Text("\(todo.name)")
-                    } else {
-                        TextField("Change Name", text: $todo.name)
-                            .textFieldStyle(.roundedBorder)
+            
+            List {
+                Section {
+                    HStack {
+                        if textToEdit == false {
+                            Text("\(todo.name)")
+                        } else {
+                            TextField("Change Name", text: $todo.name)
+                                .textFieldStyle(.roundedBorder)
+                        }
+                        Button {
+                            textToEdit.toggle()
+                        } label: {
+                            Image(systemName: textToEdit ? "checkmark.circle.fill" : "pencil.circle.fill")
+                                .foregroundColor(textToEdit ? .green : .purple)
+                        }
+                        .frame(width: 50, height: 50)
+                        
                     }
-                    Button {
-                        textToEdit.toggle()
-                    } label: {
-                        Image(systemName: textToEdit ? "checkmark.circle.fill" : "pencil.circle.fill")
-                            .foregroundColor(textToEdit ? .green : .purple)
-                    }
-                    .frame(width: 50, height: 50)
-                    
+                    Text("First item in first section")
+                    Text("Second item in first section")
+                } header: {
+                    Text("\(todo.name)")
                 }
-                Toggle(todo.isDone ? "Completed" : "Incomplete", isOn: $todo.isDone)
                 
-                
-            } header: {
-                Text(todo.name)
-                    .font(.title)
-            }
-        footer: {
-            HStack {
-                Text("Added: \(todo.creationDate.formatted(date: .numeric, time: .omitted))")
+                Section {
+                    Toggle(todo.isDone ? "Completed" : "Incomplete", isOn: $todo.isDone)
+                    Text("First item in second section")
+                    Text("Second item in second section")
+                } header: {
+                    Text("Header")
+                }
+                Button("Delete", role: .destructive) {
+                    // Code
+                }
             }
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationTitle("HÝoo")
-            HStack {
-                Text("Completed: ")
-                Image(systemName: todo.isDone ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(todo.isDone ? .green : .gray)
-            }
-            Text("Remind me at:")
-        }
-            
+            .navigationTitle("\(todo.name)")
             
         }
-        .padding(5)
     }
 }
 
 
-#Preview {
-    DetailTodoView(todo: ToDo(name: "Title Name", isDone: false, creationDate: Date(), targetDate: Date()))
-}
+//#Preview {
+//    DetailTodoView(todo: ToDo(name: "Test Name", isDone: true, creationDate: Date(), targetDate: Date()))
+//}
 

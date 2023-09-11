@@ -11,15 +11,13 @@ struct TodoRow: View {
     
     let todo: ToDo
     
-//    let timeDifference = todo.targetDate.formatted(date: .numeric, time: .omitted)
-    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(todo.name)
                     .font(.title3)
                     .bold()
-                Text(todo.targetDate, format: Date.FormatStyle(date: .numeric))
+                Text(String(todo.targetDate.distance(to: Date.now)))
                     .font(.subheadline)
             }
             Spacer()
@@ -31,10 +29,7 @@ struct TodoRow: View {
 
         }
     }
-    
-//    func daysTo(date: Date) -> Int? {
-//        let calender = Calender.current
-//    }
+
 }
 
 
