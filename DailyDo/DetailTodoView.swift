@@ -59,7 +59,7 @@ struct DetailTodoView: View {
 }
 
 
-//#Preview {
-//    DetailTodoView(todo: ToDo(name: "Test Name", isDone: true, creationDate: Date(), targetDate: Date()))
-//}
+#Preview {
+    DetailTodoView(todo: ToDo(name: "Test Name", isDone: true, creationDate: Date(), targetDate: Date()))
+}
 

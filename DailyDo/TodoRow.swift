@@ -40,6 +40,6 @@ struct TodoRow: View {
 }
 
 
-//#Preview {
-//    TodoRow(todo: ToDo(name: "Title Name", creationDate: Date(), targetDate: Date()))
-//}
+#Preview {
+    TodoRow(todo: ToDo(name: "Title Name", creationDate: Date(), targetDate: Date()))
+}
