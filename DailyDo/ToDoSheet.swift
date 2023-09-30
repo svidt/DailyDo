@@ -15,6 +15,7 @@ struct ToDoSheet: View {
     @Bindable var todo: ToDo
     @Binding var isPresented: Bool
     
+    @State private var todayDate = Date()
     @State private var newName: String = ""
     @State private var creationDate: Date = Date()
     @State private var targetDate: Date = Date()
