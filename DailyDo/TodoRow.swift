@@ -28,16 +28,13 @@ struct TodoRow: View {
                 Text(todo.name)
                     .font(.title3)
                     .bold()
-                Text(String(todo.targetDate.formatted(date: .numeric, time: .omitted)))
+                Text("\(todo.targetDate.formatted(date: .abbreviated, time: .omitted))")
                     .font(.subheadline)
             }
             Spacer()
             VStack {
-                Text("\(Date().formatted(date: .numeric, time: .omitted))")
-//                Text("Seconds: \(compareDates)")
-//                Text("Minutes: \(minutesInterval)")
-//                Text("Hours: \(hoursInterval)")
-                Text("Days: \(abs(daysInterval).rounded())")
+                Text("Days until: \(targetDate.timeIntervalSinceNow.rounded())")
+//                Text("Days: \(abs(daysInterval).rounded())")
 
             }
 
