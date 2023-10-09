@@ -60,6 +60,6 @@ struct DetailTodoView: View {
 
 
 #Preview {
-    DetailTodoView(todo: ToDo(name: "Test Name", isDone: true, creationDate: Date(), targetDate: Date()))
+    DetailTodoView(todo: ToDo(name: "Preview Name", isDone: true, creationDate: .now, targetDate: .distantFuture))
 }
 

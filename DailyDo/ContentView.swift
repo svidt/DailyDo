@@ -37,88 +37,114 @@ struct ContentView: View {
                 List {
                     Section("Coming up 💪") {
                         ForEach(incompleteTodos) { todo in
-                            NavigationLink {
-                                DetailTodoView(todo: todo)
-                                    .onAppear {
-                                        withAnimation {
-                                            hideButtonWhenNotOnPage = true
+                            if todo.targetDate >= Date.now {
+                                NavigationLink {
+                                    DetailTodoView(todo: todo)
+                                        .onAppear {
+                                            withAnimation {
+                                                hideButtonWhenNotOnPage = true
+                                            }
                                         }
-                                    }
-                                    .onDisappear {
-                                        withAnimation {
-                                            hideButtonWhenNotOnPage = false
+                                        .onDisappear {
+                                            withAnimation {
+                                                hideButtonWhenNotOnPage = false
+                                            }
                                         }
-                                    }
-                                
-                            } label: {
-                                TodoRow(todo: todo)
-                                
-                            }
-                            .swipeActions(edge: .leading) {
-                                Button {
-                                    todo.isDone.toggle()
-                                    print("\(todo.name) completed at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                 } label: {
-                                    Label("Completed", systemImage: "checkmark.circle")
+                                    TodoRow(todo: todo)
                                 }
-                                .tint(.green)
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        todo.isDone.toggle()
+                                        print("\(todo.name) completed at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                    } label: {
+                                        Label("Completed", systemImage: "checkmark.circle")
+                                    }
+                                    .tint(.green)
+                                }
                             }
                         }
                         .onDelete(perform: deleteItems)
                     }
                     
-                    Section("All Done 👍") {
-                        ForEach(completedTodos) { todo in
+                // If DONE and is still in future
+                Section("All Done 👍") {
+                    ForEach(completedTodos) { todo in
+                        if todo.targetDate > Date.now {
                             NavigationLink {
                                 DetailTodoView(todo: todo)
                             } label: {
                                 TodoRow(todo: todo)
                             }
                         }
-                        .onDelete(perform: deleteItems)
+                    }
+                    .onDelete(perform: deleteItems)
+                }
+                    
+                // If is in the past
+                Section("Previous Do's") {
+                    ForEach(todos) { todo in
+                        if todo.targetDate < Date.now {
+                            NavigationLink {
+                                DetailTodoView(todo: todo)
+                            } label: {
+                                TodoRow(todo: todo)
+                            }
+                        }
                     }
                 }
-                
-                .navigationTitle("DailyDo")
-                .sheet(isPresented: $showingToDoSheet)
-                {
-                    ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
-                        .presentationDetents([.fraction(0.7)])
-                }
-                
             }
             
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        showingToDoSheet = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .bold()
-                            .padding(20)
-                            .background(.purple)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .offset(CGSize(width: hideButtonWhenNotOnPage == false ? 0.0 : 100.0, height: 0))
-                        
-                    }
-                    .padding()
-                }
-                Spacer()
+            .navigationTitle("DailyDo")
+            .sheet(isPresented: $showingToDoSheet)
+            {
+                ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
+                    .presentationDetents([.fraction(0.7)])
             }
             
         }
         
-    }
-    
-    private func deleteItems(offsets: IndexSet) {
-        for index in offsets {
-            modelContext.delete(todos[index])
-            print("Item deleted")
+        VStack {
+            HStack {
+                Spacer()
+                Button {
+                    showingToDoSheet = true
+                    
+                    // Adding test ToDos
+                    let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture)
+                    let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast)
+                    let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now)
+                    
+                    modelContext.insert(todo_future)
+                    modelContext.insert(todo_past)
+                    modelContext.insert(todo_now)
+                    
+                } label: {
+                    Image(systemName: "plus")
+                        .bold()
+                        .padding(20)
+                        .background(.purple)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                        .offset(CGSize(width: hideButtonWhenNotOnPage == false ? 0.0 : 100.0, height: 0))
+                    
+                }
+                .padding()
+            }
+            Spacer()
         }
+        
     }
     
+}
+
+private func deleteItems(offsets: IndexSet) {
+    for index in offsets {
+        modelContext.delete(todos[index])
+        print("Item deleted")
+    }
+}
+
 }
 
 #Preview {
