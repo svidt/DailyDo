@@ -24,18 +24,25 @@ struct ToDoSheet: View {
     
     var body: some View {
         
+        // Copy this global gradient
+        let gradient = LinearGradient(
+            colors: [.purple, .blue],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        
         VStack(alignment: .leading) {
             Section() {
                 var placeholderText: String {
-                    newName == "" ? "DailyDo" : newName
+                    newName == "" ? "New event" : newName
                 }
                 Text(placeholderText)
-                    .font(.largeTitle).bold()
-                    .foregroundStyle(.purple)
-//                    .padding(.vertical, 20)
+                    .font(.largeTitle)
+                    .bold()
                 HStack {
                     TextField("Add name", text: $newName)
                         .padding(10)
+                        .bold()
                         .background(.purple.opacity(0.3))
                         .clipShape(RoundedRectangle(cornerRadius: 25.0))
                         .autocorrectionDisabled()
@@ -43,14 +50,15 @@ struct ToDoSheet: View {
                         .onAppear {
                             keyboardFocused = true
                         }
-                    Button("+ Add") {
+                    Button("Add") {
                         addItem()
                         print("\(todo.name) added")
                     }
                     .disabled(newName == "" ? true : false)
                     .bold()
                     .padding(10)
-                    .background(.purple)
+//                    .background(.purple)
+                    .background(gradient)
                     .foregroundColor(.white)
                     .opacity(newName == "" ? 0.5 : 1.0)
                     .clipShape(Capsule())
@@ -62,6 +70,7 @@ struct ToDoSheet: View {
                     .datePickerStyle(.graphical)
                     .tint(.purple)
             }
+            Spacer()
         }
         .padding(20)
     }

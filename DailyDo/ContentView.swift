@@ -33,6 +33,7 @@ struct ContentView: View {
     
     var body: some View {
         
+        // Copy this global gradient
         let gradient = LinearGradient(
             colors: [.purple, .blue],
             startPoint: .topLeading,
@@ -65,7 +66,7 @@ struct ContentView: View {
                                         todo.isDone.toggle()
                                         print("\(todo.name) completed at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     } label: {
-                                        Label("Completed", systemImage: "checkmark.circle")
+                                        Label("Completed", systemImage: "checkmark.circle.fill")
                                     }
                                     .tint(.green)
                                 }
@@ -83,6 +84,16 @@ struct ContentView: View {
                                 } label: {
                                     TodoRow(todo: todo)
                                 }
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        todo.isDone.toggle()
+                                        print("\(todo.name) Uncompleted at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                    } label: {
+                                        Label("Uncompleted", systemImage: "checkmark.circle")
+                                    }
+                                    .tint(.yellow)
+                                }
+                                
                             }
                         }
                         .onDelete(perform: deleteItems)
@@ -97,8 +108,10 @@ struct ContentView: View {
                                 } label: {
                                     TodoRow(todo: todo)
                                 }
+                                
                             }
                         }
+                        .onDelete(perform: deleteItems)
                     }
                 }
                 
