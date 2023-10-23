@@ -32,10 +32,17 @@ struct ContentView: View {
     @State private var hideButtonWhenNotOnPage = false
     
     var body: some View {
+        
+        let gradient = LinearGradient(
+            colors: [.purple, .blue],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        
         ZStack {
             NavigationView {
                 List {
-                    Section("Coming up 💪") {
+                    Section("Coming up") {
                         ForEach(incompleteTodos) { todo in
                             if todo.targetDate >= Date.now {
                                 NavigationLink {
@@ -67,84 +74,83 @@ struct ContentView: View {
                         .onDelete(perform: deleteItems)
                     }
                     
-                // If DONE and is still in future
-                Section("All Done 👍") {
-                    ForEach(completedTodos) { todo in
-                        if todo.targetDate > Date.now {
-                            NavigationLink {
-                                DetailTodoView(todo: todo)
-                            } label: {
-                                TodoRow(todo: todo)
+                    // If DONE and is still in future
+                    Section("Done Do's") {
+                        ForEach(completedTodos) { todo in
+                            if todo.targetDate > Date.now {
+                                NavigationLink {
+                                    DetailTodoView(todo: todo)
+                                } label: {
+                                    TodoRow(todo: todo)
+                                }
                             }
                         }
+                        .onDelete(perform: deleteItems)
                     }
-                    .onDelete(perform: deleteItems)
-                }
                     
-                // If is in the past
-                Section("Previous Do's") {
-                    ForEach(todos) { todo in
-                        if todo.targetDate < Date.now {
-                            NavigationLink {
-                                DetailTodoView(todo: todo)
-                            } label: {
-                                TodoRow(todo: todo)
+                    // If is in the past
+                    Section("History") {
+                        ForEach(todos) { todo in
+                            if todo.targetDate < Date.now {
+                                NavigationLink {
+                                    DetailTodoView(todo: todo)
+                                } label: {
+                                    TodoRow(todo: todo)
+                                }
                             }
                         }
                     }
                 }
+                
+                .navigationTitle("DailyDo")
+                .sheet(isPresented: $showingToDoSheet)
+                {
+                    ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
+                        .presentationDetents([.fraction(0.7)])
+                }
+                
             }
             
-            .navigationTitle("DailyDo")
-            .sheet(isPresented: $showingToDoSheet)
-            {
-                ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
-                    .presentationDetents([.fraction(0.7)])
-            }
-            
-        }
-        
-        VStack {
-            HStack {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button {
+                        showingToDoSheet = true
+                        
+                        // Adding test ToDos
+                        let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture)
+                        let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast)
+                        let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now)
+                        
+                        modelContext.insert(todo_future)
+                        modelContext.insert(todo_past)
+                        modelContext.insert(todo_now)
+                        
+                        
+                    } label: {
+                        Image(systemName: "plus")
+                            .bold()
+                            .padding(20)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                        
+                    }
+                    .background(gradient)
+                    .clipShape(Circle())
+                    .padding()
+                    .offset(CGSize(width: hideButtonWhenNotOnPage == false ? 0.0 : 100.0, height: 0))
+                }
                 Spacer()
-                Button {
-                    showingToDoSheet = true
-                    
-                    // Adding test ToDos
-                    let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture)
-                    let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast)
-                    let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now)
-                    
-                    modelContext.insert(todo_future)
-                    modelContext.insert(todo_past)
-                    modelContext.insert(todo_now)
-                    
-                } label: {
-                    Image(systemName: "plus")
-                        .bold()
-                        .padding(20)
-                        .background(.purple)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                        .offset(CGSize(width: hideButtonWhenNotOnPage == false ? 0.0 : 100.0, height: 0))
-                    
-                }
-                .padding()
             }
-            Spacer()
         }
-        
     }
     
-}
-
-private func deleteItems(offsets: IndexSet) {
-    for index in offsets {
-        modelContext.delete(todos[index])
-        print("Item deleted")
+    private func deleteItems(offsets: IndexSet) {
+        for index in offsets {
+            modelContext.delete(todos[index])
+            print("Item deleted")
+        }
     }
-}
-
 }
 
 #Preview {

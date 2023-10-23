@@ -15,6 +15,8 @@ struct ToDoSheet: View {
     @Bindable var todo: ToDo
     @Binding var isPresented: Bool
     
+    @FocusState private var keyboardFocused: Bool
+    
     @State private var todayDate = Date()
     @State private var newName: String = ""
     @State private var creationDate: Date = Date()
@@ -30,12 +32,17 @@ struct ToDoSheet: View {
                 Text(placeholderText)
                     .font(.largeTitle).bold()
                     .foregroundStyle(.purple)
+//                    .padding(.vertical, 20)
                 HStack {
                     TextField("Add name", text: $newName)
                         .padding(10)
                         .background(.purple.opacity(0.3))
                         .clipShape(RoundedRectangle(cornerRadius: 25.0))
                         .autocorrectionDisabled()
+                        .focused($keyboardFocused)
+                        .onAppear {
+                            keyboardFocused = true
+                        }
                     Button("+ Add") {
                         addItem()
                         print("\(todo.name) added")
@@ -55,11 +62,8 @@ struct ToDoSheet: View {
                     .datePickerStyle(.graphical)
                     .tint(.purple)
             }
-            
-//            Spacer()
         }
-        .padding(.vertical, 20)
-        .padding(.horizontal, 20)
+        .padding(20)
     }
     
     func addItem() {
