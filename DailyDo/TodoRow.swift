@@ -15,9 +15,10 @@ struct TodoRow: View {
     var body: some View {
         
         let targetDate = self.todo.targetDate
-        
         let timeInterval = targetDate.timeIntervalSinceNow / 60 / 60 / 24
         
+        let dayCount = Int(timeInterval.rounded(.up))
+            
         // If DailyDo is in the future
         if todo.targetDate > Date.now {
             HStack {
@@ -28,11 +29,20 @@ struct TodoRow: View {
                     Text("\(todo.targetDate.formatted(date: .abbreviated, time: .omitted))")
                         .font(.subheadline)
                 }
+                
                 Spacer()
-                VStack {
-                    Text("\(Int(timeInterval.rounded(.up)))")
-                        .font(.title3)
-                        .bold()
+                
+                VStack(alignment: .trailing) {
+                    if dayCount == abs(1) {
+                        Text("\(Int(timeInterval.rounded(.up))) Day")
+                            .font(.title3)
+                            .bold()
+                    } else {
+                        Text("\(Int(timeInterval.rounded(.up))) Days")
+                            .font(.title3)
+                            .bold()
+
+                    }
                 }
             }
             
