@@ -19,34 +19,17 @@ struct DetailTodoView: View {
             List {
                 Section {
                     HStack {
-                        if textToEdit == false {
-                            Text("\(todo.name)")
-                        } else {
-                            TextField("Change Name", text: $todo.name)
-                                .textFieldStyle(.roundedBorder)
-                        }
-                        Button {
-                            textToEdit.toggle()
-                        } label: {
-                            Image(systemName: textToEdit ? "checkmark.circle.fill" : "pencil.circle.fill")
-                                .foregroundColor(textToEdit ? .green : .purple)
-                        }
-                        .frame(width: 50, height: 50)
+                        TextField("Change Name", text: $todo.name)
+                            .textFieldStyle(.roundedBorder)
                         
                     }
-                    Text("First item in first section")
-                    Text("Second item in first section")
+                    
+                    // Insert calender
+                    
                 } header: {
-                    Text("\(todo.name)")
+                    Text("Details")
                 }
                 
-                Section {
-                    Toggle(todo.isDone ? "Completed" : "Incomplete", isOn: $todo.isDone)
-                    Text("First item in second section")
-                    Text("Second item in second section")
-                } header: {
-                    Text("Header")
-                }
                 Button("Delete", role: .destructive) {
                     // Code
                 }
@@ -59,7 +42,7 @@ struct DetailTodoView: View {
 }
 
 
-#Preview {
-    DetailTodoView(todo: ToDo(name: "Preview Name", isDone: true, creationDate: .now, targetDate: .distantFuture))
-}
+//#Preview {
+//    DetailTodoView(todo: ToDo(name: "Preview Name", isDone: true, creationDate: .now, targetDate: .distantFuture))
+//}
 
