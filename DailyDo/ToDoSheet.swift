@@ -25,55 +25,61 @@ struct ToDoSheet: View {
     var body: some View {
         
         // Copy this global gradient
-        let gradient = LinearGradient(
+        let colorGradient = LinearGradient(
             colors: [.purple, .blue],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
         
         VStack(alignment: .leading) {
-            Section() {
-                var placeholderText: String {
-                    newName == "" ? "New event" : newName
-                }
-                Text(placeholderText)
-                    .font(.largeTitle)
-                    .bold()
-                HStack {
-                    TextField("Add name", text: $newName)
-                        .padding(10)
-                        .bold()
-                        .background(.purple.opacity(0.3))
-                        .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                        .autocorrectionDisabled()
-                        .focused($keyboardFocused)
-                        .onAppear {
-                            keyboardFocused = true
-                        }
-                    Button("Add") {
-                        addItem()
-                        print("\(todo.name) added")
-                    }
-                    .disabled(newName == "" ? true : false)
-                    .bold()
+            var placeholderText: String {
+                newName == "" ? "New event" : newName
+            }
+            Text(placeholderText)
+                .font(.largeTitle)
+                .bold()
+            HStack {
+                TextField("Add name", text: $newName)
                     .padding(10)
-//                    .background(.purple)
-                    .background(gradient)
+                    .bold()
+                    .background(.purple.opacity(0.3))
+                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                    .autocorrectionDisabled()
+                    .focused($keyboardFocused)
+                    .onAppear {
+                        keyboardFocused = true
+                    }
+                    .overlay(alignment: .trailing) {
+                        Button {
+                            print("Adding image..")
+                        } label: { Image(systemName: "plus") }
+                            .bold()
+                            .imageScale(.large)
+                            .foregroundColor(.purple)
+                            .padding(.horizontal, 10)
+                    }
+                
+                Button {
+                    addItem()
+                    print("\(todo.name) added")
+                } label: { Image(systemName: "checkmark") }
+                    .bold()
+                    .imageScale(.large)
+                    .disabled(newName == "" ? true : false)
+                    .padding(10)
+                    .background(colorGradient)
                     .foregroundColor(.white)
                     .opacity(newName == "" ? 0.5 : 1.0)
                     .clipShape(Capsule())
-                }
             }
-            
-            Section {
-                DatePicker("Pick at date please", selection: $targetDate, displayedComponents: [.date])
-                    .datePickerStyle(.graphical)
-                    .tint(.purple)
-            }
-            Spacer()
+            DatePicker("Pick at date please", selection: $targetDate, displayedComponents: [.date])
+                .datePickerStyle(.graphical)
+                .tint(.purple)
         }
-        .padding(20)
+        .padding(10)
+        Spacer()
     }
+    
     
     func addItem() {
         let newItem = ToDo(name: newName, isDone: false, creationDate: creationDate, targetDate: targetDate)

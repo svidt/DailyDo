@@ -119,7 +119,7 @@ struct ContentView: View {
                 .sheet(isPresented: $showingToDoSheet)
                 {
                     ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
-                        .presentationDetents([.fraction(0.7)])
+//                        .presentationDetents([.fraction(0.7)])
                 }
                 
             }
