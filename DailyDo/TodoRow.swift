@@ -15,47 +15,36 @@ struct TodoRow: View {
     var body: some View {
         
         let targetDate = self.todo.targetDate
-        
         let timeInterval = targetDate.timeIntervalSinceNow / 60 / 60 / 24
         
-        // If DailyDo is in the future
-        if todo.targetDate > Date.now {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(todo.name)
-                        .font(.title3)
-                        .bold()
-                    Text("\(todo.targetDate.formatted(date: .abbreviated, time: .omitted))")
-                        .font(.subheadline)
-                }
-                Spacer()
-                VStack {
-                    Text("\(Int(timeInterval.rounded(.up)))")
-                        .font(.title3)
-                        .bold()
-                }
+        let dayDays = Int(timeInterval.rounded())
+        
+        var displayDays: String  {
+            if dayDays >= 2 {
+                String("\(dayDays) Days")
+            } else if dayDays == 1 {
+                String("\(dayDays) Day")
+            } else if dayDays == 0 {
+                String("Today")
+            } else if dayDays == -1 {
+                String("\(dayDays) Day ago")
+            } else if dayDays <= -2 {
+                String("\(dayDays) Days ago")
             }
-            
-            // If DailyDo is in the past
-        } else {
-            
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(todo.name)
-                        .font(.subheadline)
-                        .bold()
-                    Text("\(todo.targetDate.formatted(date: .abbreviated, time: .omitted))")
-                        .font(.subheadline)
-                }
-                
-                Spacer()
-                
-                VStack {
-                    Text("\(Int(timeInterval.rounded())) Day")
-                        .font(.subheadline)
-                }
+            else {
+                String("Missing date")
             }
-            .foregroundColor(.gray)
+        }
+        HStack {
+            VStack(alignment: .leading) {
+                Text(todo.name)
+                Text("\(todo.targetDate.formatted(date: .abbreviated, time: .omitted))")
+                    .font(.subheadline)
+            }
+            Spacer()
+            VStack {
+                Text(displayDays)
+            }
         }
     }
 }

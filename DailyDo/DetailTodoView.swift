@@ -15,25 +15,22 @@ struct DetailTodoView: View {
     var body: some View {
         
         VStack {
-            
-            List {
                 Section {
                     HStack {
                         TextField("Change Name", text: $todo.name)
                             .textFieldStyle(.roundedBorder)
                         
                     }
-                    
-                    // Insert calender
-                    
-                } header: {
-                    Text("Details")
                 }
+            DatePicker("Change date", selection: $todo.targetDate)
+            
+            // Display Image
+            Rectangle()
+                .foregroundColor(.gray)
                 
                 Button("Delete", role: .destructive) {
                     // Code
                 }
-            }
             .navigationBarTitleDisplayMode(.automatic)
             .navigationTitle("\(todo.name)")
             

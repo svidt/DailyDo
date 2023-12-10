@@ -31,24 +31,22 @@ struct ContentView: View {
     @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
     
     @State private var showingToDoSheet = false
-    
     @State private var searchText = ""
     
+    // Global gradient colorscheme
+    let gradient = LinearGradient(
+        colors: [.dailydoPrimary, .dailydoSecondary],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
     var body: some View {
-        
-        // Global gradient colorscheme
-        let gradient = LinearGradient(
-            colors: [.purple, .blue],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        
         ZStack {
             NavigationView {
                 List {
-                    Section("☑️ Do") {
-                        ForEach(incompleteTodos) { todo in
-                            if todo.targetDate >= Date.now {
+                    if searchText.isEmpty {
+                        Section("☑️ Do") {
+                            ForEach(incompleteTodos) { todo in
                                 NavigationLink {
                                     DetailTodoView(todo: todo)
                                 } label: {
@@ -64,14 +62,10 @@ struct ContentView: View {
                                     .tint(.green)
                                 }
                             }
+                            .onDelete(perform: deleteItems)
                         }
-                        .onDelete(perform: deleteItems)
-                    }
-                    
-                    // If DONE and is still in future
-                    Section("✅ Done") {
-                        ForEach(completedTodos) { todo in
-                            if todo.targetDate > Date.now {
+                        Section("✅ Done") {
+                            ForEach(completedTodos) { todo in
                                 NavigationLink {
                                     DetailTodoView(todo: todo)
                                 } label: {
@@ -86,57 +80,78 @@ struct ContentView: View {
                                     }
                                     .tint(.yellow)
                                 }
-                                
                             }
+                            .onDelete(perform: deleteItems)
                         }
-                        .onDelete(perform: deleteItems)
-                    }
-                    
-                    // If is in the past
-                    Section("📋 Did") {
-                        ForEach(todos) { todo in
-                            if todo.targetDate < Date.now {
-                                NavigationLink {
-                                    DetailTodoView(todo: todo)
-                                } label: {
-                                    TodoRow(todo: todo)
-                                }
-                                
+                        
+                    } else {
+                        ForEach(filteredTodos) { todo in
+                            NavigationLink {
+                                DetailTodoView(todo: todo)
+                            } label: {
+                                TodoRow(todo: todo)
+                            }
+                            .swipeActions(edge: .leading) {
+                                    Button {
+                                        todo.isDone.toggle()
+                                        if todo.isDone {
+                                            print("\(todo.name) Undo at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        } else {
+                                            print("\(todo.name) Done at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        }
+                                    } label: {
+                                        if todo.isDone {
+                                            Label("Undo", systemImage: "arrow.uturn.backward")
+                                        } else {
+                                            Label("Done", systemImage: "checkmark.circle")
+                                        }
+                                    }
+                                    .tint(todo.isDone ? .yellow : .green)
                             }
                         }
                         .onDelete(perform: deleteItems)
                     }
                 }
-                .searchable(text: $searchText, prompt: "Search")
                 .navigationTitle("DailyDo")
+                .searchable(text: $searchText, prompt: "Search")
                 .sheet(isPresented: $showingToDoSheet)
                 {
                     ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
                 }
                 .toolbar {
-                    Button(action: {
-                        showingToDoSheet = true
-                        
-                        // Adding test ToDos
-                        let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture)
-                        let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast)
-                        let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now)
-                        
-                        modelContext.insert(todo_future)
-                        modelContext.insert(todo_past)
-                        modelContext.insert(todo_now)
-                        
-                    }, label: {
-                        Image(systemName: "plus")
-                            .bold()
-                            .imageScale(.large)
-                            .padding(20)
-                            .foregroundColor(.white)
-                            .background(gradient)
-                            .clipShape(Circle())
-                    })
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            showingToDoSheet = true
+                            
+                            // Adding test ToDos
+                            let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture)
+                            let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast)
+                            let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now)
+                            
+                            modelContext.insert(todo_future)
+                            modelContext.insert(todo_past)
+                            modelContext.insert(todo_now)
+                            
+                        }, label: {
+                            Image(systemName: "plus")
+                                .bold()
+                                .imageScale(.large)
+                                .padding(20)
+                                .foregroundColor(.white)
+                                .background(gradient)
+                                .clipShape(Circle())
+                        })
+                    }
                 }
             }
+        }
+    }
+    
+    var filteredTodos: [ToDo] {
+        if searchText.isEmpty {
+            return todos
+        } else {
+            return todos.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
     

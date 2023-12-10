@@ -26,7 +26,7 @@ struct ToDoSheet: View {
         
         // Copy this global gradient
         let colorGradient = LinearGradient(
-            colors: [.purple, .blue],
+            colors: [.dailydoPrimary, .dailydoSecondary],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
@@ -41,8 +41,8 @@ struct ToDoSheet: View {
             HStack {
                 TextField("Add name", text: $newName)
                     .padding(10)
-                    .bold()
-                    .background(.purple.opacity(0.3))
+//                    .bold()
+                    .background(.dailydoPrimary.opacity(0.3))
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
                     .autocorrectionDisabled()
                     .focused($keyboardFocused)
@@ -55,7 +55,7 @@ struct ToDoSheet: View {
                         } label: { Image(systemName: "plus") }
                             .bold()
                             .imageScale(.large)
-                            .foregroundColor(.purple)
+                            .foregroundColor(.dailydoPrimary)
                             .padding(.horizontal, 10)
                     }
                 
@@ -72,9 +72,9 @@ struct ToDoSheet: View {
                     .opacity(newName == "" ? 0.5 : 1.0)
                     .clipShape(Capsule())
             }
-            DatePicker("Pick at date please", selection: $targetDate, displayedComponents: [.date])
+            DatePicker("Pick at date please", selection: $targetDate, displayedComponents: [.hourAndMinute, .date])
                 .datePickerStyle(.graphical)
-                .tint(.purple)
+                .tint(.dailydoSecondary)
         }
         .padding(10)
         Spacer()
