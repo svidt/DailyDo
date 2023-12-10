@@ -11,6 +11,8 @@
 // Notifications: https://www.hackingwithswift.com/books/ios-swiftui/scheduling-local-notifications
 // Adding QR Code: https://www.hackingwithswift.com/books/ios-swiftui/generating-and-scaling-up-a-qr-code
 // Working with Dates: https://www.hackingwithswift.com/books/ios-swiftui/working-with-dates
+// Searchable text: https://www.hackingwithswift.com/books/ios-swiftui/making-a-swiftui-view-searchable
+
 
 import SwiftUI
 import SwiftData
@@ -29,11 +31,12 @@ struct ContentView: View {
     @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
     
     @State private var showingToDoSheet = false
-    @State private var hideButtonWhenNotOnPage = false
+    
+    @State private var searchText = ""
     
     var body: some View {
         
-        // Copy this global gradient
+        // Global gradient colorscheme
         let gradient = LinearGradient(
             colors: [.purple, .blue],
             startPoint: .topLeading,
@@ -43,30 +46,20 @@ struct ContentView: View {
         ZStack {
             NavigationView {
                 List {
-                    Section("Coming up") {
+                    Section("☑️ Do") {
                         ForEach(incompleteTodos) { todo in
                             if todo.targetDate >= Date.now {
                                 NavigationLink {
                                     DetailTodoView(todo: todo)
-                                        .onAppear {
-                                            withAnimation {
-                                                hideButtonWhenNotOnPage = true
-                                            }
-                                        }
-                                        .onDisappear {
-                                            withAnimation {
-                                                hideButtonWhenNotOnPage = false
-                                            }
-                                        }
                                 } label: {
                                     TodoRow(todo: todo)
                                 }
                                 .swipeActions(edge: .leading) {
                                     Button {
                                         todo.isDone.toggle()
-                                        print("\(todo.name) completed at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        print("\(todo.name) Done at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     } label: {
-                                        Label("Completed", systemImage: "checkmark.circle.fill")
+                                        Label("Done", systemImage: "checkmark.circle")
                                     }
                                     .tint(.green)
                                 }
@@ -76,7 +69,7 @@ struct ContentView: View {
                     }
                     
                     // If DONE and is still in future
-                    Section("Done Do's") {
+                    Section("✅ Done") {
                         ForEach(completedTodos) { todo in
                             if todo.targetDate > Date.now {
                                 NavigationLink {
@@ -87,9 +80,9 @@ struct ContentView: View {
                                 .swipeActions(edge: .leading) {
                                     Button {
                                         todo.isDone.toggle()
-                                        print("\(todo.name) Uncompleted at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        print("\(todo.name) Undo at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     } label: {
-                                        Label("Uncompleted", systemImage: "checkmark.circle")
+                                        Label("Undo", systemImage: "arrow.uturn.backward")
                                     }
                                     .tint(.yellow)
                                 }
@@ -100,7 +93,7 @@ struct ContentView: View {
                     }
                     
                     // If is in the past
-                    Section("History") {
+                    Section("📋 Did") {
                         ForEach(todos) { todo in
                             if todo.targetDate < Date.now {
                                 NavigationLink {
@@ -114,20 +107,14 @@ struct ContentView: View {
                         .onDelete(perform: deleteItems)
                     }
                 }
-                
+                .searchable(text: $searchText, prompt: "Search")
                 .navigationTitle("DailyDo")
                 .sheet(isPresented: $showingToDoSheet)
                 {
                     ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
-//                        .presentationDetents([.fraction(0.7)])
                 }
-                
-            }
-            
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
+                .toolbar {
+                    Button(action: {
                         showingToDoSheet = true
                         
                         // Adding test ToDos
@@ -139,21 +126,16 @@ struct ContentView: View {
                         modelContext.insert(todo_past)
                         modelContext.insert(todo_now)
                         
-                        
-                    } label: {
+                    }, label: {
                         Image(systemName: "plus")
                             .bold()
+                            .imageScale(.large)
                             .padding(20)
                             .foregroundColor(.white)
+                            .background(gradient)
                             .clipShape(Circle())
-                        
-                    }
-                    .background(gradient)
-                    .clipShape(Circle())
-                    .padding()
-                    .offset(CGSize(width: hideButtonWhenNotOnPage == false ? 0.0 : 100.0, height: 0))
+                    })
                 }
-                Spacer()
             }
         }
     }
