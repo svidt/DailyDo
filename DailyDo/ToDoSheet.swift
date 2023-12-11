@@ -22,6 +22,9 @@ struct ToDoSheet: View {
     @State private var creationDate: Date = Date()
     @State private var targetDate: Date = Date()
     
+    @State private var isPickerShowing = false
+//    @State private var isNotificationEnabled: Bool
+    
     var body: some View {
         
         // Copy this global gradient
@@ -41,7 +44,6 @@ struct ToDoSheet: View {
             HStack {
                 TextField("Add name", text: $newName)
                     .padding(10)
-//                    .bold()
                     .background(.dailydoPrimary.opacity(0.3))
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
                     .autocorrectionDisabled()
@@ -51,12 +53,28 @@ struct ToDoSheet: View {
                     }
                     .overlay(alignment: .trailing) {
                         Button {
-                            print("Adding image..")
-                        } label: { Image(systemName: "plus") }
+                            todo.notificationDate.toggle()
+                            
+                        } label: { Image(systemName: todo.notificationDate ? "bell.fill" : "bell.slash.fill") }
                             .bold()
                             .imageScale(.large)
-                            .foregroundColor(.dailydoPrimary)
+                            .foregroundColor(.dailydoPrimary.opacity(todo.notificationDate ? 1.0 : 0.5))
                             .padding(.horizontal, 10)
+                    }
+                
+                Button {
+                    isPickerShowing = true
+                    print("Opening camera..")
+                } label: { Image(systemName: "camera.fill") }
+                    .bold()
+                    .imageScale(.large)
+                    .padding(10)
+                    .background(colorGradient)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+                    .sheet(isPresented: $isPickerShowing, onDismiss: nil) {
+                        // Image picker
+//                        ImagePicker()
                     }
                 
                 Button {
@@ -65,16 +83,19 @@ struct ToDoSheet: View {
                 } label: { Image(systemName: "checkmark") }
                     .bold()
                     .imageScale(.large)
-                    .disabled(newName == "" ? true : false)
                     .padding(10)
                     .background(colorGradient)
                     .foregroundColor(.white)
                     .opacity(newName == "" ? 0.5 : 1.0)
-                    .clipShape(Capsule())
+                    .disabled(newName == "" ? true : false)
+                    .clipShape(Circle())
+                
             }
-            DatePicker("Pick at date please", selection: $targetDate, displayedComponents: [.hourAndMinute, .date])
+            
+            DatePicker("Select a date", selection: $targetDate)
                 .datePickerStyle(.graphical)
                 .tint(.dailydoSecondary)
+            
         }
         .padding(10)
         Spacer()
@@ -82,7 +103,7 @@ struct ToDoSheet: View {
     
     
     func addItem() {
-        let newItem = ToDo(name: newName, isDone: false, creationDate: creationDate, targetDate: targetDate)
+        let newItem = ToDo(name: newName, isDone: false, creationDate: creationDate, targetDate: targetDate, notificationDate: false)
         modelContext.insert(newItem)
         isPresented = false
     }

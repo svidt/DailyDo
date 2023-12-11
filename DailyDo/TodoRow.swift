@@ -51,5 +51,5 @@ struct TodoRow: View {
 
 
 #Preview {
-    TodoRow(todo: ToDo(name: "Title Name", creationDate: Date(), targetDate: Date()))
+    TodoRow(todo: ToDo(name: "Title Name", creationDate: Date(), targetDate: Date(), notificationDate: false))
 }

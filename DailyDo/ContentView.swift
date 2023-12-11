@@ -116,7 +116,7 @@ struct ContentView: View {
                 .searchable(text: $searchText, prompt: "Search")
                 .sheet(isPresented: $showingToDoSheet)
                 {
-                    ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date()), isPresented: $showingToDoSheet)
+                    ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date(), notificationDate: true), isPresented: $showingToDoSheet)
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -124,9 +124,9 @@ struct ContentView: View {
                             showingToDoSheet = true
                             
                             // Adding test ToDos
-                            let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture)
-                            let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast)
-                            let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now)
+                            let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture, notificationDate: true)
+                            let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast, notificationDate: true)
+                            let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now, notificationDate: true)
                             
                             modelContext.insert(todo_future)
                             modelContext.insert(todo_past)
