@@ -13,25 +13,20 @@
 // Working with Dates: https://www.hackingwithswift.com/books/ios-swiftui/working-with-dates
 // Searchable text: https://www.hackingwithswift.com/books/ios-swiftui/making-a-swiftui-view-searchable
 
-
 import SwiftUI
 import SwiftData
 import UserNotifications
 
 struct ContentView: View {
+    
     @Environment(\.modelContext) private var modelContext
     
     // Order ToDo's in reverse date order - Newest one on top, oldest at the bottom.
     @Query(sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var todos: [ToDo]
     
-    // Sort after creation date and filter for completed ToDos
-    @Query(filter: #Predicate<ToDo>{ $0.isDone }, sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var completedTodos: [ToDo]
-    
-    // Sort after creation date and filter for incomplete ToDos
-    @Query(filter: #Predicate<ToDo>{ !$0.isDone }, sort: [.init(\ToDo.targetDate, order: .reverse)], animation: .smooth) private var incompleteTodos: [ToDo]
-    
     @State private var showingToDoSheet = false
     @State private var searchText = ""
+    @State private var tapped = false
     
     // Global gradient colorscheme
     let gradient = LinearGradient(
@@ -45,46 +40,33 @@ struct ContentView: View {
             NavigationView {
                 List {
                     if searchText.isEmpty {
-                        Section("☑️ Do") {
-                            ForEach(incompleteTodos) { todo in
-                                NavigationLink {
-                                    DetailTodoView(todo: todo)
-                                } label: {
-                                    TodoRow(todo: todo)
-                                }
-                                .swipeActions(edge: .leading) {
-                                    Button {
-                                        todo.isDone.toggle()
+                        ForEach(todos) { todo in
+                            NavigationLink {
+                                DetailTodoView(todo: todo)
+                            } label: {
+                                TodoRow(todo: todo)
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button {
+                                    todo.isDone.toggle()
+                                    if todo.isDone {
+                                        print("\(todo.name) Undone at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                    } else {
                                         print("\(todo.name) Done at \(Date().formatted(date: .abbreviated, time: .shortened))")
-                                    } label: {
-                                        Label("Done", systemImage: "checkmark.circle")
                                     }
-                                    .tint(.green)
-                                }
-                            }
-                            .onDelete(perform: deleteItems)
-                        }
-                        Section("✅ Done") {
-                            ForEach(completedTodos) { todo in
-                                NavigationLink {
-                                    DetailTodoView(todo: todo)
                                 } label: {
-                                    TodoRow(todo: todo)
-                                }
-                                .swipeActions(edge: .leading) {
-                                    Button {
-                                        todo.isDone.toggle()
-                                        print("\(todo.name) Undo at \(Date().formatted(date: .abbreviated, time: .shortened))")
-                                    } label: {
+                                    if todo.isDone {
                                         Label("Undo", systemImage: "arrow.uturn.backward")
+                                    } else {
+                                        Label("Done", systemImage: "checkmark")
                                     }
-                                    .tint(.yellow)
                                 }
+                                .tint(todo.isDone ? .yellow : .green)
                             }
-                            .onDelete(perform: deleteItems)
                         }
-                        
-                    } else {
+                        .onDelete(perform: deleteItems)
+                    }
+                    else {
                         ForEach(filteredTodos) { todo in
                             NavigationLink {
                                 DetailTodoView(todo: todo)
@@ -92,21 +74,21 @@ struct ContentView: View {
                                 TodoRow(todo: todo)
                             }
                             .swipeActions(edge: .leading) {
-                                    Button {
-                                        todo.isDone.toggle()
-                                        if todo.isDone {
-                                            print("\(todo.name) Undo at \(Date().formatted(date: .abbreviated, time: .shortened))")
-                                        } else {
-                                            print("\(todo.name) Done at \(Date().formatted(date: .abbreviated, time: .shortened))")
-                                        }
-                                    } label: {
-                                        if todo.isDone {
-                                            Label("Undo", systemImage: "arrow.uturn.backward")
-                                        } else {
-                                            Label("Done", systemImage: "checkmark.circle")
-                                        }
+                                Button {
+                                    todo.isDone.toggle()
+                                    if todo.isDone {
+                                        print("\(todo.name) Undone at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                    } else {
+                                        print("\(todo.name) Done at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     }
-                                    .tint(todo.isDone ? .yellow : .green)
+                                } label: {
+                                    if todo.isDone {
+                                        Label("Undo", systemImage: "arrow.uturn.backward")
+                                    } else {
+                                        Label("Done", systemImage: "checkmark.circle")
+                                    }
+                                }
+                                .tint(todo.isDone ? .yellow : .green)
                             }
                         }
                         .onDelete(perform: deleteItems)
@@ -116,22 +98,14 @@ struct ContentView: View {
                 .searchable(text: $searchText, prompt: "Search")
                 .sheet(isPresented: $showingToDoSheet)
                 {
-                    ToDoSheet(todo: ToDo(name: "Test", creationDate: Date(), targetDate: Date(), notificationDate: true), isPresented: $showingToDoSheet)
+                    ToDoSheet(todo: ToDo(name: "", targetDate: Date(), notify: false, isDone: false), isPresented: $showingToDoSheet, notify: false)
+                        .padding()
+                    Spacer()
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
                             showingToDoSheet = true
-                            
-                            // Adding test ToDos
-                            let todo_future = ToDo(name: "Future", isDone: false, creationDate: .now, targetDate: .distantFuture, notificationDate: true)
-                            let todo_past = ToDo(name: "Past", isDone: false, creationDate: .now, targetDate: .distantPast, notificationDate: true)
-                            let todo_now = ToDo(name: "Now", isDone: false, creationDate: .now, targetDate: .now, notificationDate: true)
-                            
-                            modelContext.insert(todo_future)
-                            modelContext.insert(todo_past)
-                            modelContext.insert(todo_now)
-                            
                         }, label: {
                             Image(systemName: "plus")
                                 .bold()
@@ -141,6 +115,22 @@ struct ContentView: View {
                                 .background(gradient)
                                 .clipShape(Circle())
                         })
+                    }
+                }
+            }
+            .overlay {
+                if todos.isEmpty {
+                    VStack(spacing: 10) {
+                        Image(systemName: tapped ? "heart.fill" : "heart")
+                            .contentTransition(.symbolEffect(.replace))
+                            .scaleEffect(2.0)
+                            .opacity(0.4)
+                            .onTapGesture {
+                                tapped.toggle()
+                            }
+                        Text("A great day to add your first DailyDo")
+                            .padding()
+                            .opacity(0.4)
                     }
                 }
             }

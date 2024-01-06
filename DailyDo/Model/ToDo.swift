@@ -13,21 +13,20 @@ import UIKit
 final class ToDo {
         
     @Attribute(.unique)
-    var creationDate: Date
-    var targetDate: Date
     var name: String
+    var targetDate: Date
+    var notify: Bool
     var isDone: Bool
-    var notificationDate: Bool
     
     @Attribute(.externalStorage)
     var image: Data?
     
-    init(name: String, isDone: Bool = false, creationDate: Date, targetDate: Date, notificationDate: Bool) {
-        self.creationDate = creationDate
-        self.targetDate = targetDate
+    init(name: String, targetDate: Date, notify: Bool, isDone: Bool, image: Data? = nil) {
         self.name = name
+        self.targetDate = targetDate
+        self.notify = notify
         self.isDone = isDone
-        self.notificationDate = notificationDate
+        self.image = image
     }
 }
 

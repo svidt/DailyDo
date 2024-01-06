@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct DetailTodoView: View {
     
     @Bindable var todo: ToDo
-    @State private var textToEdit = false
-    @State private var isCalendarShowing = false
+//    @State private var textToEdit = false
+//    @State private var isCalendarShowing = false
     
     var body: some View {
         
@@ -24,18 +25,16 @@ struct DetailTodoView: View {
                     DatePicker("Change date", selection: $todo.targetDate)
                         .datePickerStyle(.compact)
                     Button {
-                        todo.notificationDate.toggle()
+                        todo.notify.toggle()
                     } label: {
-                        Image(systemName: todo.notificationDate ? "bell.fill" : "bell.slash.fill") }
-                        .bold()
+                        Image(systemName: todo.notify ? "bell.fill" : "bell.slash.fill") }
+                        .contentTransition(.symbolEffect(.replace))
                         .imageScale(.large)
-                        .foregroundColor(.dailydoPrimary.opacity(todo.notificationDate ? 1.0 : 0.8))
+                        .foregroundColor(.dailydoPrimary.opacity(todo.notify ? 1.0 : 0.8))
                         .padding(.horizontal, 10)
-                    
                 }
             }
 
-            // Display Image
             Image("plant")
                 .resizable()
                 .cornerRadius(10)
@@ -48,6 +47,6 @@ struct DetailTodoView: View {
 
 
 //#Preview {
-//    DetailTodoView(todo: ToDo(name: "Preview Name", isDone: true, creationDate: .now, targetDate: .distantFuture))
+//    DetailTodoView(todo: ToDo(name: "Placeholder", targetDate: Date.now, notify: false, isDone: false))
 //}
 

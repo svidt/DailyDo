@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2006A8892B27A310009DCFF0 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2006A8882B27A310009DCFF0 /* ImagePicker.swift */; };
+		20144A912B48391E00912625 /* TestButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20144A902B48391E00912625 /* TestButtonView.swift */; };
 		68448F252A8EA7BB001DA8F7 /* DetailTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68448F242A8EA7BB001DA8F7 /* DetailTodoView.swift */; };
 		68448F272A8EAADE001DA8F7 /* TodoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68448F262A8EAADE001DA8F7 /* TodoRow.swift */; };
 		687DBC9F2A94046E004AB6B5 /* ToDoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687DBC9E2A94046E004AB6B5 /* ToDoSheet.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		2006A8882B27A310009DCFF0 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		20144A902B48391E00912625 /* TestButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestButtonView.swift; sourceTree = "<group>"; };
 		68448F242A8EA7BB001DA8F7 /* DetailTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTodoView.swift; sourceTree = "<group>"; };
 		68448F262A8EAADE001DA8F7 /* TodoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRow.swift; sourceTree = "<group>"; };
 		687DBC9E2A94046E004AB6B5 /* ToDoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoSheet.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			children = (
 				68861C7C2A8D711700708164 /* DailyDoApp.swift */,
 				68861C7E2A8D711700708164 /* ContentView.swift */,
+				20144A902B48391E00912625 /* TestButtonView.swift */,
 				687DBC9E2A94046E004AB6B5 /* ToDoSheet.swift */,
 				2006A8882B27A310009DCFF0 /* ImagePicker.swift */,
 				68448F262A8EAADE001DA8F7 /* TodoRow.swift */,
@@ -166,6 +169,7 @@
 				2006A8892B27A310009DCFF0 /* ImagePicker.swift in Sources */,
 				68861C812A8D711700708164 /* ToDo.swift in Sources */,
 				68448F252A8EA7BB001DA8F7 /* DetailTodoView.swift in Sources */,
+				20144A912B48391E00912625 /* TestButtonView.swift in Sources */,
 				68861C7D2A8D711700708164 /* DailyDoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +301,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DailyDo/DailyDo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DailyDo/Preview Content\"";
@@ -326,6 +331,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DailyDo/DailyDo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DailyDo/Preview Content\"";

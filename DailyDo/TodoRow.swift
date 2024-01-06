@@ -38,18 +38,30 @@ struct TodoRow: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(todo.name)
-                Text("\(todo.targetDate.formatted(date: .abbreviated, time: .omitted))")
-                    .font(.subheadline)
+                    .font(.headline)
+                HStack {
+                    Text("\(todo.targetDate.formatted(date: .abbreviated, time: .omitted))")
+                    Text("\(todo.targetDate.formatted(date: .omitted, time: .shortened))")
+                    Image(systemName: todo.notify ? "bell.fill" : "bell.slash.fill")
+                        .foregroundColor(.dailydoPrimary.opacity(todo.notify ? 1.0 : 0.5))
+                }
+                .font(.subheadline)
             }
             Spacer()
             VStack {
-                Text(displayDays)
+                if todo.isDone {
+                    Image(systemName: "checkmark")
+                        .imageScale(.large)
+                } else {
+                    Text(displayDays)
+                        .font(.headline)
+                }
             }
         }
     }
 }
 
 
-#Preview {
-    TodoRow(todo: ToDo(name: "Title Name", creationDate: Date(), targetDate: Date(), notificationDate: false))
-}
+//#Preview {
+//    TodoRow(todo: ToDo(name: "Placeholder", targetDate: .now, notificationDate: true, isDone: false))
+//}

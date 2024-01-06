@@ -10,20 +10,19 @@ import SwiftData
 
 struct ToDoSheet: View {
     
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext)  var modelContext
     
     @Bindable var todo: ToDo
     @Binding var isPresented: Bool
     
-    @FocusState private var keyboardFocused: Bool
+    @FocusState var keyboardFocused: Bool
     
-    @State private var todayDate = Date()
-    @State private var newName: String = ""
-    @State private var creationDate: Date = Date()
-    @State private var targetDate: Date = Date()
+    @State var todayDate = Date()
+    @State var newName: String = ""
+    @State var targetDate: Date = Date()
     
-    @State private var isPickerShowing = false
-//    @State private var isNotificationEnabled: Bool
+    @State var isPickerShowing = false
+    @State var notify: Bool
     
     var body: some View {
         
@@ -53,12 +52,11 @@ struct ToDoSheet: View {
                     }
                     .overlay(alignment: .trailing) {
                         Button {
-                            todo.notificationDate.toggle()
-                            
-                        } label: { Image(systemName: todo.notificationDate ? "bell.fill" : "bell.slash.fill") }
-                            .bold()
+                            todo.notify.toggle()
+                        } label: { Image(systemName: todo.notify ? "bell.fill" : "bell.slash.fill") }
+                            .contentTransition(.symbolEffect(.replace))
                             .imageScale(.large)
-                            .foregroundColor(.dailydoPrimary.opacity(todo.notificationDate ? 1.0 : 0.5))
+                            .foregroundColor(.dailydoPrimary.opacity(todo.notify ? 1.0 : 0.5))
                             .padding(.horizontal, 10)
                     }
                 
@@ -66,14 +64,12 @@ struct ToDoSheet: View {
                     isPickerShowing = true
                     print("Opening camera..")
                 } label: { Image(systemName: "camera.fill") }
-                    .bold()
                     .imageScale(.large)
                     .padding(10)
                     .background(colorGradient)
                     .foregroundColor(.white)
                     .clipShape(Circle())
                     .sheet(isPresented: $isPickerShowing, onDismiss: nil) {
-                        // Image picker
 //                        ImagePicker()
                     }
                 
@@ -97,13 +93,11 @@ struct ToDoSheet: View {
                 .tint(.dailydoSecondary)
             
         }
-        .padding(10)
-        Spacer()
     }
     
     
     func addItem() {
-        let newItem = ToDo(name: newName, isDone: false, creationDate: creationDate, targetDate: targetDate, notificationDate: false)
+        let newItem = ToDo(name: newName, targetDate: targetDate, notify: todo.notify, isDone: false)
         modelContext.insert(newItem)
         isPresented = false
     }
