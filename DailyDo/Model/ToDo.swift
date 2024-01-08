@@ -12,11 +12,11 @@ import UIKit
 @Model
 final class ToDo {
         
-    @Attribute(.unique)
-    var name: String
-    var targetDate: Date
-    var notify: Bool
-    var isDone: Bool
+    @Attribute/*(.unique)*/
+    var name: String = "Name"
+    var targetDate: Date = Date.now
+    var notify: Bool = false
+    var isDone: Bool = false
     
     @Attribute(.externalStorage)
     var image: Data?

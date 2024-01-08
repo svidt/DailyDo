@@ -10,6 +10,9 @@ import UIKit
 import SwiftUI
 
 struct ImagePicker: UIViewControllerRepresentable {
+    
+    let todo: ToDo
+    
     func makeUIViewController(context: Context) -> some UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .camera
@@ -32,11 +35,15 @@ class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationContro
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Run code when user cancels
         print("Photo canceled")
+        picker.dismiss(animated: true)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         // Run code when the user has selected an image
+        
         print("Photo complete")
+        picker.dismiss(animated: true)
+        
     }
     
 }

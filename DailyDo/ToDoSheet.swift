@@ -70,7 +70,7 @@ struct ToDoSheet: View {
                     .foregroundColor(.white)
                     .clipShape(Circle())
                     .sheet(isPresented: $isPickerShowing, onDismiss: nil) {
-//                        ImagePicker()
+                        ImagePicker(todo: todo)
                     }
                 
                 Button {
@@ -89,9 +89,9 @@ struct ToDoSheet: View {
             }
             
             DatePicker("Select a date", selection: $targetDate)
-                .datePickerStyle(.graphical)
+                .datePickerStyle(.compact)
                 .tint(.dailydoSecondary)
-            
+                .padding(.vertical)
         }
     }
     

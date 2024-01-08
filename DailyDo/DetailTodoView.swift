@@ -30,7 +30,7 @@ struct DetailTodoView: View {
                         Image(systemName: todo.notify ? "bell.fill" : "bell.slash.fill") }
                         .contentTransition(.symbolEffect(.replace))
                         .imageScale(.large)
-                        .foregroundColor(.dailydoPrimary.opacity(todo.notify ? 1.0 : 0.8))
+                        .foregroundColor(.dailydoPrimary.opacity(todo.notify ? 1.0 : 0.5))
                         .padding(.horizontal, 10)
                 }
             }

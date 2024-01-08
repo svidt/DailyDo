@@ -50,9 +50,9 @@ struct ContentView: View {
                                 Button {
                                     todo.isDone.toggle()
                                     if todo.isDone {
-                                        print("\(todo.name) Undone at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        print("\(todo.name) done at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     } else {
-                                        print("\(todo.name) Done at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        print("\(todo.name) undone at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     }
                                 } label: {
                                     if todo.isDone {
@@ -77,9 +77,9 @@ struct ContentView: View {
                                 Button {
                                     todo.isDone.toggle()
                                     if todo.isDone {
-                                        print("\(todo.name) Undone at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        print("\(todo.name) done at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     } else {
-                                        print("\(todo.name) Done at \(Date().formatted(date: .abbreviated, time: .shortened))")
+                                        print("\(todo.name) undone at \(Date().formatted(date: .abbreviated, time: .shortened))")
                                     }
                                 } label: {
                                     if todo.isDone {
@@ -109,11 +109,11 @@ struct ContentView: View {
                         }, label: {
                             Image(systemName: "plus")
                                 .bold()
-                                .imageScale(.large)
-                                .padding(20)
+                                .padding(10)
                                 .foregroundColor(.white)
                                 .background(gradient)
                                 .clipShape(Circle())
+                                
                         })
                     }
                 }
