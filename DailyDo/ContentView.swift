@@ -99,9 +99,20 @@ struct ContentView: View {
                 .sheet(isPresented: $showingToDoSheet)
                 {
                     ToDoSheet(todo: ToDo(name: "", targetDate: Date(), notify: false, isDone: false), isPresented: $showingToDoSheet, notify: false)
+                        .presentationDragIndicator(.visible)
                         .padding()
                     Spacer()
                 }
+                .onAppear {
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                        if success == true {
+                            print("is all set for notifications 👍")
+                        } else if let error = error {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+                
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
@@ -135,6 +146,7 @@ struct ContentView: View {
                 }
             }
         }
+        
     }
     
     var filteredTodos: [ToDo] {

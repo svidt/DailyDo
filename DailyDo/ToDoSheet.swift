@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct ToDoSheet: View {
     
@@ -50,15 +51,6 @@ struct ToDoSheet: View {
                     .onAppear {
                         keyboardFocused = true
                     }
-                    .overlay(alignment: .trailing) {
-                        Button {
-                            todo.notify.toggle()
-                        } label: { Image(systemName: todo.notify ? "bell.fill" : "bell.slash.fill") }
-                            .contentTransition(.symbolEffect(.replace))
-                            .imageScale(.large)
-                            .foregroundColor(.dailydoPrimary.opacity(todo.notify ? 1.0 : 0.5))
-                            .padding(.horizontal, 10)
-                    }
                 
                 Button {
                     isPickerShowing = true
@@ -85,16 +77,42 @@ struct ToDoSheet: View {
                     .opacity(newName == "" ? 0.5 : 1.0)
                     .disabled(newName == "" ? true : false)
                     .clipShape(Circle())
-                
             }
             
-            DatePicker("Select a date", selection: $targetDate)
-                .datePickerStyle(.compact)
-                .tint(.dailydoSecondary)
-                .padding(.vertical)
+            HStack {
+                DatePicker("Select a date", selection: $targetDate)
+                    .datePickerStyle(.compact)
+                    .tint(.dailydoSecondary)
+                    .padding(.vertical)
+                Button {
+                    todo.notify.toggle()
+                    
+                } label: { Image(systemName: todo.notify ? "bell.fill" : "bell.slash.fill") }
+                    .contentTransition(.symbolEffect(.replace))
+                    .imageScale(.large)
+                    .foregroundColor(.dailydoPrimary.opacity(todo.notify ? 1.0 : 0.5))
+                    .padding(.horizontal, 10)
+            }
+        }
+        .onDisappear {
+            let content = UNMutableNotificationContent()
+            content.title = "DailyDo"
+            content.body = "\(newName) is now 🥳"
+            content.sound = UNNotificationSound.default
+            let id = UUID().uuidString
+            
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: targetDate)
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+            
+            if todo.notify {
+                UNUserNotificationCenter.current().add(request)
+                print("Notification is added")
+            }
         }
     }
-    
     
     func addItem() {
         let newItem = ToDo(name: newName, targetDate: targetDate, notify: todo.notify, isDone: false)
