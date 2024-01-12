@@ -35,6 +35,14 @@ struct ContentView: View {
         endPoint: .bottomTrailing
     )
     
+    var filteredTodos: [ToDo] {
+        if searchText.isEmpty {
+            return todos
+        } else {
+            return todos.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
+    
     var body: some View {
         ZStack {
             NavigationView {
@@ -115,17 +123,13 @@ struct ContentView: View {
                 
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
+                        Button {
                             showingToDoSheet = true
-                        }, label: {
-                            Image(systemName: "plus")
-                                .bold()
-                                .padding(10)
-                                .foregroundColor(.white)
-                                .background(gradient)
-                                .clipShape(Circle())
-                                
-                        })
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .tint(gradient)
+                                .scaleEffect(2)
+                        }
                     }
                 }
             }
@@ -146,21 +150,13 @@ struct ContentView: View {
                 }
             }
         }
-        
-    }
-    
-    var filteredTodos: [ToDo] {
-        if searchText.isEmpty {
-            return todos
-        } else {
-            return todos.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-        }
     }
     
     private func deleteItems(offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(todos[index])
-            print("Item deleted")
+            print("Item deleted with ID: \(todos[index].notificationIdentifier)")
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [todos[index].notificationIdentifier])
         }
     }
 }

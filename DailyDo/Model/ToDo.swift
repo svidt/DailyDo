@@ -12,11 +12,12 @@ import UIKit
 @Model
 final class ToDo {
         
-    @Attribute/*(.unique)*/
+    @Attribute
     var name: String = "Name"
     var targetDate: Date = Date.now
     var notify: Bool = false
     var isDone: Bool = false
+    var notificationIdentifier: String
     
     @Attribute(.externalStorage)
     var image: Data?
@@ -27,6 +28,7 @@ final class ToDo {
         self.notify = notify
         self.isDone = isDone
         self.image = image
+        self.notificationIdentifier = UUID().uuidString
     }
 }
 

@@ -14,16 +14,16 @@ struct ToDoSheet: View {
     @Environment(\.modelContext)  var modelContext
     
     @Bindable var todo: ToDo
-    @Binding var isPresented: Bool
     
+    @Binding var isPresented: Bool
     @FocusState var keyboardFocused: Bool
     
     @State var todayDate = Date()
     @State var newName: String = ""
     @State var targetDate: Date = Date()
-    
     @State var isPickerShowing = false
     @State var notify: Bool
+//    @State var notificationIdentifier: String
     
     var body: some View {
         
@@ -67,7 +67,7 @@ struct ToDoSheet: View {
                 
                 Button {
                     addItem()
-                    print("\(todo.name) added")
+                    print("\(newName) added")
                 } label: { Image(systemName: "checkmark") }
                     .bold()
                     .imageScale(.large)
@@ -99,17 +99,17 @@ struct ToDoSheet: View {
             content.title = "DailyDo"
             content.body = "\(newName) is now 🥳"
             content.sound = UNNotificationSound.default
-            let id = UUID().uuidString
+            
+//            let notificationIdentifier = todo.notificationIdentifier
             
             let calendar = Calendar.current
             let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: targetDate)
-            
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: todo.notificationIdentifier, content: content, trigger: trigger)
             
             if todo.notify {
+                print("Notification with ID: \(todo.notificationIdentifier)")
                 UNUserNotificationCenter.current().add(request)
-                print("Notification is added")
             }
         }
     }
