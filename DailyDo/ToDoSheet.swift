@@ -5,6 +5,7 @@
 //  Created by Svidt on 21/08/2023.
 //
 
+import PhotosUI
 import SwiftUI
 import SwiftData
 import UserNotifications
@@ -23,6 +24,7 @@ struct ToDoSheet: View {
     @State var targetDate: Date = Date()
     @State var isPickerShowing = false
     @State var notify: Bool
+    @State private var photoPicker: PhotosPickerItem?
 //    @State var notificationIdentifier: String
     
     var body: some View {
@@ -51,19 +53,27 @@ struct ToDoSheet: View {
                     .onAppear {
                         keyboardFocused = true
                     }
-                
-                Button {
-                    isPickerShowing = true
-                    print("Opening camera..")
-                } label: { Image(systemName: "camera.fill") }
-                    .imageScale(.large)
-                    .padding(10)
-                    .background(colorGradient)
-                    .foregroundColor(.white)
-                    .clipShape(Circle())
-                    .sheet(isPresented: $isPickerShowing, onDismiss: nil) {
-                        ImagePicker(todo: todo)
+                Section {
+                    if let imageData = todo.photo, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
                     }
+                    
+                    PhotosPicker(selection: $photoPicker, matching: .images) {
+                        Label("Select a photo", systemImage: "person")
+                    }
+                }
+                
+//                Button {
+//                    
+//                    print("Opening camera..")
+//                } label: { Image(systemName: "camera.fill") }
+//                    .imageScale(.large)
+//                    .padding(10)
+//                    .background(colorGradient)
+//                    .foregroundColor(.white)
+//                    .clipShape(Circle())
                 
                 Button {
                     addItem()
@@ -112,12 +122,19 @@ struct ToDoSheet: View {
                 UNUserNotificationCenter.current().add(request)
             }
         }
+        .onChange(of: photoPicker, loadPhoto)
     }
     
     func addItem() {
         let newItem = ToDo(name: newName, targetDate: targetDate, notify: todo.notify, isDone: false)
         modelContext.insert(newItem)
         isPresented = false
+    }
+    
+    func loadPhoto() {
+        Task { @MainActor in
+            todo.photo = try await photoPicker?.loadTransferable(type: Data.self)
+        }
     }
 }
 

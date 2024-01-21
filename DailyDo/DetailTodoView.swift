@@ -5,15 +5,15 @@
 //  Created by Svidt on 17/08/2023.
 //
 
-import SwiftUI
+import PhotosUI
 import SwiftData
+import SwiftUI
 
 struct DetailTodoView: View {
     
     @Bindable var todo: ToDo
-//    @State private var textToEdit = false
-//    @State private var isCalendarShowing = false
-    
+    @State private var photoPicker: PhotosPickerItem?
+
     var body: some View {
         
         VStack {
@@ -21,6 +21,19 @@ struct DetailTodoView: View {
                 
 //                TextField("Change Name", text: $todo.name)
 //                    .textFieldStyle(.roundedBorder)
+                
+                Section {
+                    if let imageData = todo.photo, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                    }
+                    
+                    PhotosPicker(selection: $photoPicker, matching: .images) {
+                        Label("Select a photo", systemImage: "person")
+                    }
+                }
+                
                 HStack {
                     DatePicker("Change date", selection: $todo.targetDate)
                         .datePickerStyle(.compact)
@@ -34,14 +47,20 @@ struct DetailTodoView: View {
                         .padding(.horizontal, 10)
                 }
             }
-
-            Image("plant")
-                .resizable()
-                .cornerRadius(10)
+        }
+        .onAppear {
+            loadPhoto()
         }
         .navigationBarTitleDisplayMode(.automatic)
         .navigationTitle("\(todo.name)")
+        .onChange(of: photoPicker, loadPhoto)
         .padding()
+    }
+    
+    func loadPhoto() {
+        Task { @MainActor in
+            todo.photo = try await photoPicker?.loadTransferable(type: Data.self)
+        }
     }
 }
 

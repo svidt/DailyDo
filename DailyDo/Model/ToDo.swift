@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-import UIKit
 
 @Model
 final class ToDo {
@@ -20,14 +19,13 @@ final class ToDo {
     var notificationIdentifier: String
     
     @Attribute(.externalStorage)
-    var image: Data?
+    var photo: Data?
     
-    init(name: String, targetDate: Date, notify: Bool, isDone: Bool, image: Data? = nil) {
+    init(name: String, targetDate: Date, notify: Bool, isDone: Bool) {
         self.name = name
         self.targetDate = targetDate
         self.notify = notify
         self.isDone = isDone
-        self.image = image
         self.notificationIdentifier = UUID().uuidString
     }
 }
