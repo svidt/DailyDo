@@ -126,7 +126,7 @@ struct ToDoSheet: View {
     }
     
     func addItem() {
-        let newItem = ToDo(name: newName, targetDate: targetDate, notify: todo.notify, isDone: false)
+        let newItem = ToDo(name: newName, targetDate: targetDate, notify: todo.notify, isDone: false, notificationIdentifier: <#String#>)
         modelContext.insert(newItem)
         isPresented = false
     }

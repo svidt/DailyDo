@@ -17,16 +17,19 @@ final class ToDo {
     var notify: Bool = false
     var isDone: Bool = false
     var notificationIdentifier: String
+    var id = UUID()
     
     @Attribute(.externalStorage)
     var photo: Data?
     
-    init(name: String, targetDate: Date, notify: Bool, isDone: Bool) {
+    init(name: String, targetDate: Date, notify: Bool, isDone: Bool, notificationIdentifier: String, id: UUID = UUID(), photo: Data? = nil) {
         self.name = name
         self.targetDate = targetDate
         self.notify = notify
         self.isDone = isDone
-        self.notificationIdentifier = UUID().uuidString
+        self.notificationIdentifier = notificationIdentifier
+        self.id = id
+        self.photo = photo
     }
 }
 

@@ -155,7 +155,7 @@ struct ContentView: View {
     private func deleteItems(offsets: IndexSet) {
         for index in offsets {
             modelContext.delete(todos[index])
-            print("Item deleted with ID: \(todos[index].notificationIdentifier)")
+            print("Item deleted with ID: \(todos[index].id)")
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [todos[index].notificationIdentifier])
         }
     }
